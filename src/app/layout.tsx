@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "VH WOODWORK — Heirloom Timber Atelier / Fort Lauderdale, FL",
+  title: "VH WOODWORK — Heirloom Timber Atelier / Coral Springs, FL",
   description:
-    "Handcrafted solid wood furniture and architectural sculptural works. Bench-crafted in Fort Lauderdale, Florida. Private atelier collection and insured nationwide transit.",
+    "Handcrafted solid wood furniture and architectural sculptural works. Bench-crafted in Coral Springs, Florida. Private atelier collection and insured nationwide transit.",
 };
 
 export default function RootLayout({

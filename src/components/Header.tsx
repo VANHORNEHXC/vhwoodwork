@@ -35,7 +35,7 @@ export function Header({ onSelectPlacement, selectedPlacement = "all" }: HeaderP
               VH WOODWORK
             </span>
             <span className="text-[9px] font-mono-luxury tracking-[0.2em] text-zinc-400 uppercase -mt-1">
-              Fine Timber Atelier &bull; Fort Lauderdale
+              Fine Timber Atelier &bull; Coral Springs
             </span>
           </Link>
 

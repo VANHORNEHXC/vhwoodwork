@@ -31,7 +31,7 @@ export function ShippingAndTermsModal({ isOpen, onClose }: ShippingAndTermsModal
         {/* Header */}
         <div className="border-b border-zinc-200/60 pb-6 mb-8">
           <span className="font-mono-luxury text-[10px] tracking-[0.25em] text-zinc-400 uppercase block mb-1">
-            Studio Policy &bull; Fort Lauderdale, FL
+            Studio Policy &bull; Coral Springs, FL
           </span>
           <h2 className="text-3xl sm:text-4xl font-roffelia font-normal text-zinc-950 tracking-tight">
             Shipping, Atelier Collection &amp; Terms
@@ -62,7 +62,7 @@ export function ShippingAndTermsModal({ isOpen, onClose }: ShippingAndTermsModal
                   Works 10 lbs or more
                 </span>
                 <p className="text-xs text-zinc-600">
-                  Architectural furniture and heavy timber works are restricted to <strong>Local Studio Collection</strong> at our Fort Lauderdale atelier to eliminate transit vibration and protect organic finishes.
+                  Architectural furniture and heavy timber works are restricted to <strong>Local Studio Collection</strong> at our Coral Springs atelier to eliminate transit vibration and protect organic finishes.
                 </p>
               </div>
             </div>
@@ -71,34 +71,32 @@ export function ShippingAndTermsModal({ isOpen, onClose }: ShippingAndTermsModal
           {/* Section 2: Studio Pickup Details */}
           <div className="space-y-2">
             <h3 className="font-roffelia font-normal text-xl text-zinc-950">
-              Fort Lauderdale Atelier Collection
+              Coral Springs Atelier Collection
             </h3>
             <p>
-              <strong>Atelier Address:</strong> 1104 NE 3rd Ave, Fort Lauderdale, FL 33304 (Broward County, FL).
+              <strong>Collection area:</strong> Coral Springs, Florida. The exact address is shared when your appointment is confirmed.
             </p>
             <p>
-              <strong>Collection Hours:</strong> Tuesday through Saturday, 10:00 to 17:00 EST by appointment.
+              <strong>Collection hours:</strong> By appointment.
             </p>
             <p>
               Our atelier crew conditions every piece prior to your arrival, provides protective moving blankets, and assists with loading into your transport vehicle (SUV, covered truck, or van).
             </p>
-            <p className="text-zinc-500 text-xs">
-              *Private white-glove courier delivery across Miami-Dade, Broward, and Palm Beach counties can be arranged upon request.
-            </p>
+            <p className="text-zinc-500 text-xs">Ask the studio about local delivery options when requesting an order.</p>
           </div>
 
           {/* Section 3: Commercial Payment & Florida Taxes */}
           <div className="space-y-2 pt-2 border-t border-zinc-200/50">
             <h3 className="font-roffelia font-normal text-xl text-zinc-950">
-              Commercial Payment Gateways
+              Payment arrangements
             </h3>
             <p>
-              We operate as a verified Florida commercial enterprise. We accept:
+              Payment details are confirmed with each order:
             </p>
             <ul className="list-disc list-inside space-y-1 text-xs text-zinc-600">
-              <li><strong>Stripe Concierge:</strong> American Express, Visa, Mastercard, Discover, Apple Pay, Google Pay, and Bank Transfers.</li>
-              <li><strong>PayPal Commercial:</strong> Instant checkout, commercial invoicing, and <em>Pay in 4</em> interest-free monthly installment privilege.</li>
-              <li><strong>Sales Tax:</strong> A mandatory 7.0% Florida state &amp; Broward County sales tax applies to all Florida pickups and deliveries.</li>
+              <li><strong>Stripe:</strong> A payment invoice can be requested through the order form.</li>
+              <li><strong>PayPal:</strong> An invoice can be requested through the order form.</li>
+              <li><strong>Sales Tax:</strong> Applicable tax is calculated after the delivery destination and order are reviewed, then confirmed before payment.</li>
             </ul>
           </div>
         </div>

@@ -22,7 +22,6 @@ export function CartDrawer({ onOpenCheckout }: CartDrawerProps) {
     deliveryMethod,
     setDeliveryMethod,
     shippingFeeCents,
-    taxCents,
     grandTotalCents,
   } = useCart();
 
@@ -70,8 +69,8 @@ export function CartDrawer({ onOpenCheckout }: CartDrawerProps) {
             </div>
             <p className="mt-1.5 text-xs text-zinc-600 leading-relaxed font-sans-luxury">
               {requiresPickup
-                ? "This acquisition includes solid hardwood pieces exceeding 10 lbs. Studio collection at our Fort Lauderdale atelier (1104 NE 3rd Ave) is required to ensure pristine finish delivery."
-                : "Your acquisition weighs under 10 lbs. You may select complimentary insured nationwide parcel delivery or private studio collection in Fort Lauderdale."}
+                ? "This acquisition includes solid hardwood pieces exceeding 10 lbs. Studio collection in Coral Springs is required; the address is shared after confirmation."
+                : "Your acquisition weighs under 10 lbs. You may select complimentary insured nationwide parcel delivery or private studio collection in Coral Springs."}
             </p>
           </div>
 
@@ -92,6 +91,7 @@ export function CartDrawer({ onOpenCheckout }: CartDrawerProps) {
                   >
                     <div className="relative h-20 w-20 shrink-0 rounded-xl bg-zinc-100 overflow-hidden shadow-2xs">
                       <Image
+                        unoptimized
                         src={item.product.primaryImage}
                         alt={item.product.name}
                         fill
@@ -219,11 +219,11 @@ export function CartDrawer({ onOpenCheckout }: CartDrawerProps) {
                   />
                   <div className="flex-1">
                     <div className="flex items-center justify-between font-medium">
-                      <span>Private Atelier Collection (Fort Lauderdale, FL)</span>
+                      <span>Private Atelier Collection (Coral Springs, FL)</span>
                       <span className="font-mono-luxury text-emerald-800 font-medium">Complimentary</span>
                     </div>
                     <p className="text-[10px] text-zinc-500 mt-0.5">
-                      1104 NE 3rd Ave &bull; Tue–Sat 10:00–17:00 by appointment
+                      Coral Springs, FL &bull; By appointment
                     </p>
                   </div>
                 </label>
@@ -246,11 +246,11 @@ export function CartDrawer({ onOpenCheckout }: CartDrawerProps) {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Florida Sales Tax (7.0% Broward)</span>
-                  <span className="font-mono-luxury font-medium text-zinc-950">${(taxCents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}</span>
+                  <span>Sales tax</span>
+                  <span className="font-mono-luxury font-medium text-zinc-950">Confirmed before payment</span>
                 </div>
                 <div className="flex justify-between pt-2 border-t border-zinc-200 text-sm font-semibold text-zinc-950 font-mono-luxury">
-                  <span>Total Due</span>
+                  <span>Estimate before tax</span>
                   <span>${(grandTotalCents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })} USD</span>
                 </div>
               </div>
@@ -265,7 +265,7 @@ export function CartDrawer({ onOpenCheckout }: CartDrawerProps) {
                     <rect width="20" height="14" x="2" y="5" rx="2" />
                     <line x1="2" x2="22" y1="10" y2="10" />
                   </svg>
-                  <span>Checkout with Stripe (Card &bull; Apple Pay)</span>
+                  <span>Request a Stripe invoice</span>
                 </button>
 
                 <button
@@ -273,7 +273,7 @@ export function CartDrawer({ onOpenCheckout }: CartDrawerProps) {
                   className="w-full rounded-full bg-[#ffc439] hover:bg-[#f6b720] text-[#003087] py-3.5 px-4 font-sans-luxury text-xs tracking-wider uppercase font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-98 border border-amber-300"
                 >
                   <span className="italic font-black text-sm">PayPal</span>
-                  <span className="text-zinc-900 font-semibold">&bull; Commercial &amp; Pay in 4</span>
+                  <span className="text-zinc-900 font-semibold">&bull; Request an invoice</span>
                 </button>
               </div>
             </div>

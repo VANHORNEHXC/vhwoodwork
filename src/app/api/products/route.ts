@@ -1,18 +1,18 @@
 import { NextResponse } from "next/server";
-import { PRODUCTS } from "@/data/products";
+import { listProducts } from "@/lib/catalog";
 
 export async function GET() {
-  return NextResponse.json({
-    studio: "VH Woodwork",
-    location: "Fort Lauderdale, FL",
-    policy: {
-      under10Lbs: "Nationwide Tracked Parcel Shipping ($18 flat or free >$300) or Local Studio Pickup",
-      over10Lbs: "Local Studio Pickup Mandatory at Fort Lauderdale Workshop (1104 NE 3rd Ave)",
-      taxRate: "7.0% Florida / Broward County",
-      gateways: ["Stripe Commercial", "PayPal Business / Commercial"],
-    },
-    count: PRODUCTS.length,
-    products: PRODUCTS,
-  });
+  try {
+    const products = await listProducts();
+    return NextResponse.json({
+      studio: "VH Woodwork",
+      owner: "Dario VanHorne",
+      location: "Coral Springs, FL",
+      shippingOrigin: "Coral Springs, FL",
+      count: products.length,
+      products,
+    }, { headers: { "Cache-Control": "no-store" } });
+  } catch {
+    return NextResponse.json({ error: "Catalog unavailable" }, { status: 503 });
+  }
 }
-

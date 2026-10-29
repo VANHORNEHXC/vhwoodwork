@@ -41,6 +41,7 @@ export function ProductTable({ products, onOpenQuickView }: ProductTableProps) {
                 <td className="p-3">
                   <div className="relative h-12 w-12 rounded-lg overflow-hidden bg-zinc-100 shadow-2xs">
                     <Image
+                      unoptimized
                       src={product.primaryImage}
                       alt={product.name}
                       fill
@@ -84,13 +85,14 @@ export function ProductTable({ products, onOpenQuickView }: ProductTableProps) {
                 </td>
                 <td className="p-3 text-center whitespace-nowrap">
                   <button
+                    disabled={!product.inStock || product.isSoldOut || product.stockCount < 1}
                     onClick={(e) => {
                       e.stopPropagation();
                       addItem(product, 1);
                     }}
                     className="rounded-full bg-zinc-900 hover:bg-black text-white px-3 py-1.5 text-[11px] font-sans-luxury tracking-wide transition-all shadow-2xs active:scale-95"
                   >
-                    + Bag
+                    {!product.inStock || product.isSoldOut || product.stockCount < 1 ? "Sold Out" : "+ Bag"}
                   </button>
                 </td>
               </tr>

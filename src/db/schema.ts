@@ -1,34 +1,37 @@
-import { pgTable, serial, text, integer, numeric, boolean, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, numeric, boolean, timestamp, jsonb } from "drizzle-orm/pg-core";
 
 export const products = pgTable("products", {
-  id: serial("id").primaryKey(),
-  lotNumber: text("lot_number").notNull(), // "LOT #01"
-  itemCode: text("item_code").notNull(), // "VHW-ST-01"
+  id: text("id").primaryKey(),
+  lotNumber: text("lot_number").notNull(),
+  itemCode: text("item_code").notNull().unique(),
   name: text("name").notNull(),
-  tagline: text("tagline"),
-  category: text("category").notNull(), // "seating" | "tables" | "storage" | "studio-objects"
-  description: text("description"),
+  tagline: text("tagline").notNull().default(""),
+  category: text("category").notNull(),
+  placement: text("placement").notNull().default("interior"),
+  description: text("description").notNull().default(""),
   priceCents: integer("price_cents").notNull(),
-  weightLbs: numeric("weight_lbs").notNull(), // < 10 lbs vs >= 10 lbs
+  weightLbs: numeric("weight_lbs", { precision: 8, scale: 2 }).notNull(),
   woodSpecies: text("wood_species").notNull(),
-  finish: text("finish"),
-  dimensions: text("dimensions"),
-  joinery: text("joinery"),
-  leadTime: text("lead_time"),
-  requiresPickup: boolean("requires_pickup").notNull().default(false),
-  primaryImage: text("primary_image"),
-  secondaryImage: text("secondary_image"),
-  inStock: boolean("in_stock").default(true),
-  stockCount: integer("stock_count").default(1),
-  createdAt: timestamp("created_at").defaultNow(),
+  finish: text("finish").notNull().default(""),
+  dimensions: text("dimensions").notNull().default(""),
+  joinery: text("joinery").notNull().default(""),
+  leadTime: text("lead_time").notNull().default(""),
+  primaryImage: text("primary_image").notNull(),
+  secondaryImage: text("secondary_image").notNull(),
+  inStock: boolean("in_stock").notNull().default(true),
+  stockCount: integer("stock_count").notNull().default(0),
+  isSoldOut: boolean("is_sold_out").notNull().default(false),
+  provenance: text("provenance").notNull().default(""),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const orders = pgTable("orders", {
-  id: serial("id").primaryKey(),
-  orderNumber: text("order_number").notNull(), // "VHW-ST-123456"
-  paymentProvider: text("payment_provider").notNull(), // "stripe" | "paypal"
-  deliveryMethod: text("delivery_method").notNull(), // "shipping" | "pickup"
-  totalWeightLbs: numeric("total_weight_lbs").notNull(),
+  id: text("id").primaryKey(),
+  paymentProvider: text("payment_provider").notNull(),
+  paymentStatus: text("payment_status").notNull().default("pending"),
+  deliveryMethod: text("delivery_method").notNull(),
+  totalWeightLbs: numeric("total_weight_lbs", { precision: 8, scale: 2 }).notNull(),
   subtotalCents: integer("subtotal_cents").notNull(),
   shippingFeeCents: integer("shipping_fee_cents").notNull().default(0),
   taxCents: integer("tax_cents").notNull().default(0),
@@ -40,6 +43,10 @@ export const orders = pgTable("orders", {
   pickupTimeSlot: text("pickup_time_slot"),
   vehicleType: text("vehicle_type"),
   shippingAddress: text("shipping_address"),
-  status: text("status").notNull().default("confirmed"),
-  createdAt: timestamp("created_at").defaultNow(),
+  items: jsonb("items").$type<Array<{ id: string; name: string; quantity: number; priceCents: number }>>().notNull(),
+  status: text("status").notNull().default("new"),
+  trackingNumber: text("tracking_number"),
+  fulfillmentNotes: text("fulfillment_notes"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });

@@ -16,9 +16,11 @@ export function ProductCard({ product, onOpenQuickView }: ProductCardProps) {
   const [justAdded, setJustAdded] = useState(false);
 
   const isPickupOnly = product.weightLbs >= 10;
+  const unavailable = !product.inStock || product.isSoldOut || product.stockCount < 1;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (unavailable) return;
     addItem(product, 1);
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1500);
@@ -34,6 +36,7 @@ export function ProductCard({ product, onOpenQuickView }: ProductCardProps) {
       {/* Sculptural Photographic Frame */}
       <div className="relative aspect-4/3 w-full overflow-hidden rounded-xl bg-[#f2f1ed]">
         <Image
+          unoptimized
           src={isHovered ? product.secondaryImage : product.primaryImage}
           alt={product.name}
           fill
@@ -96,18 +99,21 @@ export function ProductCard({ product, onOpenQuickView }: ProductCardProps) {
         {/* Discrete Acquisition Bar */}
         <div className="mt-4 pt-3 border-t border-zinc-200/50 flex items-center justify-between gap-2">
           <span className="text-[10px] font-mono-luxury text-zinc-400 uppercase tracking-wider">
-            {isPickupOnly ? "Fort Lauderdale Atelier" : "Atelier Batch • Ready"}
+            {isPickupOnly ? "Coral Springs Atelier" : "Atelier Batch • Ready"}
           </span>
 
           <button
             onClick={handleAddToCart}
+            disabled={unavailable}
             className={`rounded-full px-4 py-1.5 text-xs font-sans-luxury transition-all flex items-center gap-1.5 shadow-2xs active:scale-95 ${
               justAdded
                 ? "bg-zinc-900 text-white font-medium"
                 : "bg-zinc-100 hover:bg-zinc-950 text-zinc-800 hover:text-white font-medium"
             }`}
           >
-            {justAdded ? (
+            {unavailable ? (
+              <span>Sold Out</span>
+            ) : justAdded ? (
               <span>Acquisition Added ✓</span>
             ) : (
               <span>Acquire +</span>

@@ -11,7 +11,8 @@
     "build:css": "node scripts/build-css.js",
     "lint": "eslint",
     "db:push": "drizzle-kit push",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "db:seed": "tsx scripts/seed-db.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",

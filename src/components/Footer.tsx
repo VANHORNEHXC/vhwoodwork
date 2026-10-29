@@ -1,50 +1,19 @@
-"use client";
-
-import React, { useState } from "react";
-
 export function Footer() {
-  const [subscribed, setSubscribed] = useState(false);
-  const [email, setEmail] = useState("");
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setTimeout(() => setSubscribed(false), 3000);
-      setEmail("");
-    }
-  };
-
   return (
     <footer id="contact" className="border-t border-zinc-200/80 bg-white text-zinc-900 pt-16 pb-12 font-sans">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        {/* Newsletter Signup (FF-Shop signature) */}
+        {/* Owner studio update */}
         <div className="ff-glass rounded-3xl p-8 sm:p-12 mb-16 shadow-xs flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="max-w-xl">
             <span className="text-[11px] font-mono-sub tracking-widest text-zinc-400 uppercase block mb-2">
-              Studio Registry &bull; Fort Lauderdale
+              Dario VanHorne &bull; Coral Springs
             </span>
             <h3 className="text-3xl sm:text-4xl font-editorial font-extrabold tracking-tight text-zinc-950">
-              Receive notifications for upcoming timber releases and bespoke commissions.
+              Follow the work as it takes shape.
             </h3>
           </div>
 
-          <form onSubmit={handleSubscribe} className="w-full md:w-auto flex flex-col sm:flex-row gap-2">
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address"
-              className="rounded-full px-5 py-3 text-xs font-mono-sub bg-white border border-zinc-200 text-zinc-950 focus:outline-hidden focus:border-zinc-950 min-w-[260px] shadow-2xs"
-            />
-            <button
-              type="submit"
-              className="rounded-full bg-zinc-950 hover:bg-zinc-800 text-white px-6 py-3 text-xs font-medium font-editorial transition-all shadow-xs active:scale-95 whitespace-nowrap"
-            >
-              {subscribed ? "Subscribed ✓" : "Join Register"}
-            </button>
-          </form>
+          <a href="https://www.instagram.com/dario.vanhorne/" target="_blank" rel="noopener noreferrer" className="rounded-full bg-zinc-950 px-6 py-3 text-xs font-medium text-white transition-colors hover:bg-zinc-800">Dario on Instagram ↗</a>
         </div>
 
         {/* 4-Column Directory Grid */}
@@ -55,27 +24,22 @@ export function Footer() {
               VH WOODWORK
             </span>
             <p className="text-zinc-500 leading-relaxed font-sans text-xs">
-              Hand-built solid wood furniture &amp; studio objects. Made in Fort Lauderdale, Broward County, Florida.
+              Solid wood furniture &amp; studio objects by Dario VanHorne. Based in Coral Springs, Florida.
             </p>
-            <div className="text-[11px] font-mono-sub text-zinc-400">
-              26.1224° N, 80.1373° W
-            </div>
           </div>
 
           {/* Column 2 */}
           <div className="space-y-2">
             <span className="font-mono-sub text-[11px] text-zinc-400 uppercase tracking-widest block mb-1">
-              Studio &amp; Hours
+              Studio &amp; Delivery
             </span>
             <p className="text-zinc-700 leading-relaxed text-xs">
-              1104 NE 3rd Ave
-              <br />
-              Fort Lauderdale, FL 33304
+              Coral Springs, FL
             </p>
             <p className="text-zinc-500 text-[11px]">
-              Tue–Sat: 10:00 – 17:00 EST
+              Shipping from Coral Springs
               <br />
-              Local pickup by appointment
+              Local pickup by appointment; address shared after confirmation
             </p>
           </div>
 
@@ -88,7 +52,7 @@ export function Footer() {
               <li>Insured nationwide shipping for eligible objects</li>
               <li>Studio collection for larger furniture</li>
               <li className="text-[11px] text-zinc-400 pt-1">
-                Broward / Miami white-glove courier available on request
+                Ask about local delivery options
               </li>
             </ul>
           </div>
@@ -96,27 +60,13 @@ export function Footer() {
           {/* Column 4 */}
           <div className="space-y-2">
             <span className="font-mono-sub text-[11px] text-zinc-400 uppercase tracking-widest block mb-1">
-              Commercial Gateways
+              Payment
             </span>
             <p className="text-zinc-600 text-xs">
-              Florida Merchant Account powered by:
+              Request an order through the shop. Payment is confirmed separately.
             </p>
-            <div className="flex flex-wrap gap-2 pt-1">
-              <span className="rounded-full bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 text-[10px] font-mono-sub text-zinc-700">
-                Stripe Verified
-              </span>
-              <span className="rounded-full bg-amber-100 border border-amber-300 px-2.5 py-0.5 text-[10px] font-mono-sub text-amber-900 font-bold">
-                PayPal Commercial
-              </span>
-              <span className="rounded-full bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 text-[10px] font-mono-sub text-zinc-700">
-                Apple Pay
-              </span>
-              <span className="rounded-full bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 text-[10px] font-mono-sub text-zinc-700">
-                Pay in 4
-              </span>
-            </div>
             <p className="text-[10px] text-zinc-400 pt-1 font-mono-sub">
-              7% Florida Sales Tax applies to FL pickups/shipments.
+              Applicable sales tax is confirmed before payment.
             </p>
           </div>
         </div>
@@ -124,14 +74,10 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono-sub text-zinc-400">
           <div>
-            &copy; {new Date().getFullYear()} VH Woodwork LLC &bull; Fort Lauderdale, FL
+            &copy; {new Date().getFullYear()} VH Woodwork LLC &bull; Coral Springs, FL
           </div>
           <div className="flex items-center gap-4 text-[11px]">
-            <span>Privacy</span>
-            <span>&bull;</span>
-            <span>Terms of Acquisition</span>
-            <span>&bull;</span>
-            <span>Care Directive</span>
+            <a href="https://www.instagram.com/dario.vanhorne/" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-900">Instagram ↗</a>
           </div>
         </div>
       </div>

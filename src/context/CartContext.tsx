@@ -68,12 +68,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        setItems(JSON.parse(saved));
+        queueMicrotask(() => setItems(JSON.parse(saved)));
       }
     } catch {
       // Ignore localstorage errors
     }
-    setIsHydrated(true);
+    queueMicrotask(() => setIsHydrated(true));
   }, []);
 
   // Save to localStorage
@@ -88,16 +88,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items, isHydrated]);
 
   const addItem = (product: Product, quantity = 1) => {
+    if (!product.inStock || product.isSoldOut || product.stockCount < 1) return;
     setItems((prev) => {
       const existing = prev.find((item) => item.product.id === product.id);
       if (existing) {
         return prev.map((item) =>
           item.product.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
+            ? { ...item, quantity: Math.min(product.stockCount, item.quantity + quantity) }
             : item
         );
       }
-      return [...prev, { product, quantity }];
+      return [...prev, { product, quantity: Math.min(product.stockCount, quantity) }];
     });
     setIsCartOpen(true);
   };
@@ -113,7 +114,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
     setItems((prev) =>
       prev.map((item) =>
-        item.product.id === productId ? { ...item, quantity } : item
+        item.product.id === productId ? { ...item, quantity: Math.min(item.product.stockCount, quantity) } : item
       )
     );
   };
@@ -135,14 +136,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 
   // Strict Florida Woodwork rule:
-  // Any individual item >= 10 lbs OR total order weight >= 10 lbs -> Local Fort Lauderdale Studio Pickup Only
+  // Any individual item >= 10 lbs OR total order weight >= 10 lbs -> Local Coral Springs Studio Pickup Only
   const hasHeavyItem = items.some((item) => item.product.weightLbs >= 10);
   const requiresPickup = hasHeavyItem || totalWeightLbs >= 10;
 
   // Auto-enforce pickup if required
   useEffect(() => {
     if (requiresPickup && deliveryMethod !== "pickup") {
-      setDeliveryMethodState("pickup");
+      queueMicrotask(() => setDeliveryMethodState("pickup"));
     }
   }, [requiresPickup, deliveryMethod]);
 
@@ -154,7 +155,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setDeliveryMethodState(method);
   };
 
-  // Shipping fee: $0 for Fort Lauderdale studio pickup; $18 flat for nationwide lightweight items (< 10 lbs)
+  // Shipping fee: $0 for Coral Springs studio pickup; $18 flat for nationwide lightweight items (< 10 lbs)
   const shippingFeeCents =
     deliveryMethod === "pickup" || totalItems === 0
       ? 0
@@ -162,8 +163,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       ? 0 // Free shipping over $300 for lightweight objects
       : 1800; // $18.00 flat tracked shipping via USPS/UPS
 
-  // Florida Sales Tax (Broward County / Fort Lauderdale is 7.0%)
-  const taxCents = Math.round((subtotalCents + shippingFeeCents) * 0.07);
+  // Tax is confirmed with the final invoice after destination review.
+  const taxCents = 0;
   const grandTotalCents = subtotalCents + shippingFeeCents + taxCents;
 
   return (

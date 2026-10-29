@@ -95,26 +95,30 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
         throw new Error(data.error || "Failed to process payment request");
       }
 
-      if (data.redirectUrl) {
-        window.location.href = data.redirectUrl;
-        return;
-      }
-
-      const orderId = data.orderId || `VHW-${Math.floor(100000 + Math.random() * 900000)}`;
+      if (!data.orderId) throw new Error("Order reference was not returned");
+      const orderId = data.orderId;
       
       sessionStorage.setItem(
         "vhw_latest_order",
         JSON.stringify({
           orderId,
           paymentProvider,
+          paymentStatus: data.paymentStatus || "pending",
           deliveryMethod,
           grandTotalCents,
+          shippingFeeCents,
+          taxCents,
           totalWeightLbs,
           items,
           customer: payload.customer,
           createdAt: new Date().toISOString(),
         })
       );
+
+      if (data.redirectUrl) {
+        window.location.href = data.redirectUrl;
+        return;
+      }
 
       clearCart();
       onClose();
@@ -136,7 +140,7 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
         <div className="flex items-center justify-between pb-5 border-b border-zinc-200/60">
           <div>
             <span className="font-mono-luxury text-[10px] uppercase tracking-widest text-zinc-400 block">
-              Private Concierge &bull; Fort Lauderdale
+              Private Concierge &bull; Coral Springs
             </span>
             <h3 className="font-roffelia font-normal text-2xl sm:text-3xl text-zinc-950 mt-1">
               Acquisition Dispatch
@@ -157,7 +161,7 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
               <span>Fulfillment Protocol:</span>
               <span className={requiresPickup ? "text-amber-800" : "text-emerald-800"}>
                 {deliveryMethod === "pickup"
-                  ? "Atelier Collection (Fort Lauderdale, FL)"
+                  ? "Atelier Collection (Coral Springs, FL)"
                   : "Insured Nationwide Transit"}
               </span>
             </div>
@@ -178,7 +182,7 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                 </span>
               </div>
               <div>
-                <span className="block text-[10px] font-mono-luxury text-zinc-400 uppercase">Total:</span>
+                <span className="block text-[10px] font-mono-luxury text-zinc-400 uppercase">Estimate before tax:</span>
                 <span className="font-semibold text-zinc-950">${(grandTotalCents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}</span>
               </div>
             </div>
@@ -190,11 +194,10 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
             <div className="space-y-4 text-xs font-sans-luxury">
               <div className="border-l-2 border-amber-500/80 pl-3.5">
                 <h4 className="font-semibold text-zinc-950 text-xs">
-                  Atelier Collection Appointment (Fort Lauderdale, FL)
+                  Atelier Collection Appointment (Coral Springs, FL)
                 </h4>
                 <p className="text-[11px] text-zinc-500 mt-0.5">
-                  Workshop Atelier: <strong>1104 NE 3rd Ave, Fort Lauderdale, FL 33304</strong>.
-                  Our crew prepares your work with protective blankets and coordinates vehicle loading.
+                  Collection is arranged in <strong>Coral Springs, Florida</strong>. The exact address is shared after confirmation.
                 </p>
               </div>
 
@@ -379,7 +382,7 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
           {/* Payment Method Switcher */}
           <div className="border-t border-zinc-200/60 pt-5 space-y-3 font-sans-luxury text-xs">
             <span className="text-[10px] font-mono-luxury uppercase tracking-widest text-zinc-400 block">
-              Certified Commercial Gateway:
+              Preferred payment method:
             </span>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -394,11 +397,11 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-xs font-sans-luxury">STRIPE CONCIERGE</span>
+                  <span className="font-semibold text-xs font-sans-luxury">STRIPE</span>
                   <span className="h-1.5 w-1.5 rounded-full bg-current" />
                 </div>
                 <p className={`text-[11px] mt-2 ${paymentProvider === "stripe" ? "text-zinc-300" : "text-zinc-500"}`}>
-                  American Express, Visa, Mastercard, Apple Pay, Bank Wire.
+                  Request a Stripe payment invoice after the studio confirms the order.
                 </p>
               </button>
 
@@ -419,7 +422,7 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                   </span>
                 </div>
                 <p className={`text-[11px] mt-2 ${paymentProvider === "paypal" ? "text-zinc-200" : "text-zinc-500"}`}>
-                  Commercial invoice, PayPal Credit, 4 monthly installments.
+                  Request a PayPal invoice from the studio.
                 </p>
               </button>
             </div>
@@ -445,16 +448,16 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
               {isProcessing ? (
                 <>
                   <span className="inline-block h-3.5 w-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  <span>AUTHORIZING TRANSACTION DISPATCH...</span>
+                  <span>SENDING ORDER REQUEST...</span>
                 </>
               ) : (
                 <span>
-                  CONFIRM &amp; AUTHORIZE ${(grandTotalCents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })} VIA {paymentProvider.toUpperCase()}
+                  SUBMIT ORDER REQUEST &bull; ${(grandTotalCents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}
                 </span>
               )}
             </button>
             <p className="text-center text-[10px] font-mono-luxury text-zinc-400 pt-1">
-              Protected 256-Bit SSL Encryption &bull; Florida Sales Tax (7.0%) Included
+              Final tax and payment are confirmed separately. No charge is made on this form.
             </p>
           </div>
         </form>

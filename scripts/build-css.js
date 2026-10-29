@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { compile } = require("@tailwindcss/node");
 const { Scanner } = require("@tailwindcss/oxide");
 const fs = require("fs");

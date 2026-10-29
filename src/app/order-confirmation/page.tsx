@@ -10,8 +10,11 @@ import { CartProvider } from "@/context/CartContext";
 interface OrderData {
   orderId: string;
   paymentProvider: string;
+  paymentStatus: "pending" | "paid";
   deliveryMethod: "shipping" | "pickup";
   grandTotalCents: number;
+  shippingFeeCents?: number;
+  taxCents?: number;
   totalWeightLbs: number;
   items: Array<{
     product: {
@@ -42,7 +45,6 @@ interface OrderData {
 function OrderConfirmationContent() {
   const searchParams = useSearchParams();
   const queryOrderId = searchParams.get("orderId");
-  const queryProvider = searchParams.get("provider");
 
   const [order, setOrder] = useState<OrderData | null>(null);
 
@@ -50,47 +52,27 @@ function OrderConfirmationContent() {
     try {
       const stored = sessionStorage.getItem("vhw_latest_order");
       if (stored) {
-        setOrder(JSON.parse(stored));
-      } else {
-        setOrder({
-          orderId: queryOrderId || `VHW-FL-${Math.floor(100000 + Math.random() * 900000)}`,
-          paymentProvider: queryProvider || "stripe",
-          deliveryMethod: "pickup",
-          grandTotalCents: 176550,
-          totalWeightLbs: 48.0,
-          items: [
-            {
-              product: {
-                name: "Monolithic Slab Coffee Table",
-                itemCode: "VHW-TB-02",
-                lotNumber: "LOT #03",
-                woodSpecies: "Single-Origin American Black Walnut",
-                weightLbs: 48.0,
-                priceCents: 165000,
-              },
-              quantity: 1,
-            },
-          ],
-          customer: {
-            name: "Private Collector",
-            email: "collector@estate.com",
-            phone: "(954) 555-0144",
-            pickupDate: "Thursday, Next Week",
-            pickupTimeSlot: "12:00 PM - 2:00 PM",
-            vehicleType: "Full size SUV",
-          },
-          createdAt: new Date().toISOString(),
-        });
+        const parsed = JSON.parse(stored) as OrderData;
+        if (!queryOrderId || parsed.orderId === queryOrderId) queueMicrotask(() => setOrder(parsed));
       }
     } catch {
       // Ignore
     }
-  }, [queryOrderId, queryProvider]);
+  }, [queryOrderId]);
+
+  useEffect(() => {
+    if (!queryOrderId) return;
+    fetch(`/api/orders/status?id=${encodeURIComponent(queryOrderId)}`)
+      .then((response) => response.ok ? response.json() : null)
+      .then((data) => {
+        if (data?.paymentStatus === "paid") setOrder((current) => current ? { ...current, paymentStatus: "paid" } : current);
+      }).catch(() => {});
+  }, [queryOrderId]);
 
   if (!order) {
     return (
       <div className="flex-1 flex items-center justify-center p-16 font-mono-luxury text-xs text-zinc-400">
-        RETRIEVING ATELIER DISPATCH RECORD...
+        No order details are available for this session.
       </div>
     );
   }
@@ -112,10 +94,10 @@ function OrderConfirmationContent() {
           <div className="border-b border-zinc-200/70 pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
               <span className="font-mono-luxury text-[10px] text-amber-800 tracking-[0.2em] uppercase block mb-1">
-                Official Atelier Acquisition &bull; Fort Lauderdale
+                Official Atelier Acquisition &bull; Coral Springs
               </span>
               <h1 className="text-3xl sm:text-4xl font-roffelia font-normal text-zinc-950 tracking-tight">
-                VH Woodwork &bull; Receipt Dossier
+                VH Woodwork &bull; Order Dossier
               </h1>
             </div>
             <div className="text-left sm:text-right font-mono-luxury text-xs text-zinc-400">
@@ -133,15 +115,13 @@ function OrderConfirmationContent() {
             <div className="flex items-center gap-2 font-medium font-mono-luxury text-[11px] uppercase tracking-wider">
               <span className="inline-block h-2 w-2 rounded-full bg-current" />
               <span>
-                {isPickup
-                  ? "Acquisition Confirmed &bull; Atelier Collection Reserved in Fort Lauderdale, FL"
-                  : "Acquisition Confirmed &bull; Insured Nationwide Transit Queued"}
+                {order.paymentStatus === "paid" ? "Payment Confirmed" : "Order Request Received • Payment Pending"}
               </span>
             </div>
             <p className="mt-1.5 text-xs text-zinc-600 leading-relaxed">
-              {isPickup
-                ? "This acquisition includes solid hardwood pieces over 10 lbs. Studio technicians are preparing and conditioning your timber piece for inspection and private collection."
-                : "This acquisition is under 10 lbs. Our crew will custom-crate your piece in reinforced cartons with full insured tracking within 24–48 hours."}
+              {order.paymentStatus === "paid"
+                ? (isPickup ? "The studio will coordinate collection in Coral Springs." : "The studio will prepare insured shipping from Coral Springs.")
+                : "The studio will confirm payment and fulfillment details before dispatch or collection."}
             </p>
           </div>
 
@@ -150,7 +130,7 @@ function OrderConfirmationContent() {
             <div className="rounded-2xl bg-[#f9f8f5] border border-zinc-200/60 p-5 font-sans-luxury text-xs space-y-3">
               <div className="flex items-center justify-between border-b border-zinc-200/60 pb-2.5">
                 <span className="font-mono-luxury text-[11px] font-semibold text-zinc-950 uppercase tracking-wider">
-                  {isPickup ? "Atelier Collection Directive:" : "Delivery Destination:"}
+                  {isPickup ? "Atelier Collection:" : "Delivery Destination:"}
                 </span>
                 <span className="rounded-full bg-zinc-950 text-white px-3 py-0.5 text-[10px] font-mono-luxury">
                   Mass: {order.totalWeightLbs} lbs
@@ -164,18 +144,16 @@ function OrderConfirmationContent() {
                     <p className="font-semibold text-zinc-950 mt-1">
                       VH WOODWORK ATELIER
                       <br />
-                      1104 NE 3rd Ave
-                      <br />
-                      Fort Lauderdale, FL 33304
+                      Coral Springs, FL
                     </p>
                     <p className="text-[11px] text-zinc-500 mt-1">
-                      Broward County &bull; Ground loading bay access
+                      Exact address shared after appointment confirmation
                     </p>
                   </div>
                   <div>
                     <span className="text-zinc-400 font-mono-luxury block text-[10px] uppercase">Collection Appointment:</span>
                     <p className="font-semibold text-zinc-950 mt-1">
-                      {order.customer?.pickupDate || "Tue–Sat, 10:00–17:00 EST"}
+                      {order.customer?.pickupDate || "By appointment"}
                     </p>
                     <p className="text-zinc-600 text-[11px]">
                       Window: {order.customer?.pickupTimeSlot || "Coordinated by concierge"}
@@ -241,20 +219,18 @@ function OrderConfirmationContent() {
             <div className="border-t border-zinc-200/60 pt-4 flex flex-col items-end font-sans-luxury text-xs space-y-1.5">
               <div className="flex justify-between w-64 text-zinc-500">
                 <span>Fulfillment Fee:</span>
-                <span className="font-mono-luxury font-medium text-zinc-950">{isPickup ? "Complimentary" : "$18.00"}</span>
+                <span className="font-mono-luxury font-medium text-zinc-950">{isPickup ? "Complimentary" : `$${((order.shippingFeeCents || 0) / 100).toFixed(2)}`}</span>
               </div>
               <div className="flex justify-between w-64 text-zinc-500">
-                <span>FL Sales Tax (7.0%):</span>
-                <span className="font-mono-luxury font-medium text-zinc-950">
-                  ${(Math.round(order.grandTotalCents * 0.07 / 1.07) / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}
-                </span>
+                <span>Sales tax:</span>
+                <span className="font-mono-luxury font-medium text-zinc-950">Confirmed before payment</span>
               </div>
               <div className="flex justify-between w-64 text-sm font-semibold text-zinc-950 border-t border-zinc-200 pt-2 font-mono-luxury">
-                <span>Total Settled:</span>
+                <span>Estimate before tax:</span>
                 <span>${(order.grandTotalCents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })} USD</span>
               </div>
               <div className="text-[10px] font-mono-luxury text-zinc-400 pt-1">
-                Settled via {order.paymentProvider.toUpperCase()} Commercial Concierge Gateway
+                {order.paymentStatus === "paid" ? `Paid via ${order.paymentProvider.toUpperCase()}` : `Payment pending via ${order.paymentProvider.toUpperCase()}`}
               </div>
             </div>
 

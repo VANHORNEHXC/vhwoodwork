@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VH Woodwork
 
-## Getting Started
+Next.js storefront and administration for Dario VanHorne. Shipping and studio pickup originate in Coral Springs, Florida.
 
-First, run the development server:
+## Local setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Install dependencies with `npm install`. Configure `.env.local` with:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Variable | Purpose |
+| --- | --- |
+| `DATABASE_URL` | Neon Postgres connection string |
+| `ADMIN_USERNAME` | Admin login username |
+| `ADMIN_PIN_SALT` | Random salt for the PIN hash |
+| `ADMIN_PIN_HASH` | Hex encoded scrypt hash of the PIN |
+| `ADMIN_SESSION_SECRET` | Random secret of at least 32 characters for signed sessions |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Generate a salt and PIN hash with Node's `crypto.scryptSync`. Keep the plain PIN outside source control and share it only with the owner. `.env.local` is ignored by Git. The production host needs the same five variables configured in its environment.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run the committed migration with `npx drizzle-kit migrate`, then `npm run db:seed` to insert the initial catalog without overwriting existing inventory. Start the site with `npm run dev`. The dashboard is at `/admin`.
 
-## Learn More
+## Store operations
 
-To learn more about Next.js, take a look at the following resources:
+The dashboard shows order activity, lets the owner update payment and fulfillment status, tracking, and notes, and supports adding, editing, and deleting inventory. Inventory changes are saved in Postgres and appear in the public catalog.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Order forms save pending requests. Customers are **not charged** at submission. The displayed amount is an estimate before applicable sales tax; the studio must confirm the destination, final tax, and payment before marking an order paid. Stripe and PayPal are recorded as payment preferences. Configure a tax calculation and invoicing workflow before enabling automatic charging.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The customer review section is ready for real testimonials; no reviews are invented. The owner's portrait should be added to the project once the supplied image file is available.

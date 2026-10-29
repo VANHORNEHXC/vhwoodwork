@@ -15,13 +15,15 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
   const [selectedImage, setSelectedImage] = useState<"primary" | "secondary">("primary");
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
-  const [openAccordion, setOpenAccordion] = useState<"specs" | "shipping" | "craft">("specs");
+  const [openAccordion, setOpenAccordion] = useState<"specs" | "shipping" | "craft" | "">("specs");
 
   if (!product) return null;
 
   const isPickupOnly = product.weightLbs >= 10;
+  const unavailable = !product.inStock || product.isSoldOut || product.stockCount < 1;
 
   const handleAddToCart = () => {
+    if (unavailable) return;
     addItem(product, quantity);
     setAdded(true);
     setTimeout(() => {
@@ -56,6 +58,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
           <div className="flex flex-col gap-3.5">
             <div className="relative aspect-4/3 w-full rounded-2xl overflow-hidden bg-[#f2f1ed] shadow-xs">
               <Image
+                unoptimized
                 src={selectedImage === "primary" ? product.primaryImage : product.secondaryImage}
                 alt={product.name}
                 fill
@@ -83,7 +86,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                   selectedImage === "primary" ? "ring-1 ring-zinc-950 shadow-xs" : "opacity-60 hover:opacity-100"
                 }`}
               >
-                <Image src={product.primaryImage} alt="Primary" fill className="object-cover" />
+                <Image unoptimized src={product.primaryImage} alt="Primary" fill className="object-cover" />
               </button>
               <button
                 onClick={() => setSelectedImage("secondary")}
@@ -91,13 +94,13 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                   selectedImage === "secondary" ? "ring-1 ring-zinc-950 shadow-xs" : "opacity-60 hover:opacity-100"
                 }`}
               >
-                <Image src={product.secondaryImage} alt="Secondary detail" fill className="object-cover" />
+                <Image unoptimized src={product.secondaryImage} alt="Secondary detail" fill className="object-cover" />
               </button>
             </div>
 
             <div className="pt-2 text-xs font-mono-luxury text-zinc-400 flex items-center justify-between uppercase tracking-wider">
               <span>{product.lotNumber} &bull; {product.itemCode}</span>
-              <span>Fort Lauderdale Atelier</span>
+              <span>Coral Springs Atelier</span>
             </div>
           </div>
 
@@ -122,7 +125,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                 {/* Accordion 1: Specifications */}
                 <div>
                   <button
-                    onClick={() => setOpenAccordion(openAccordion === "specs" ? ("" as any) : "specs")}
+                    onClick={() => setOpenAccordion(openAccordion === "specs" ? "" : "specs")}
                     className="w-full py-3.5 flex items-center justify-between text-xs font-mono-luxury uppercase text-zinc-900 tracking-wider font-semibold"
                   >
                     <span>Material Provenance &amp; Joinery</span>
@@ -157,18 +160,18 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                 {/* Accordion 2: Fulfillment Directive */}
                 <div>
                   <button
-                    onClick={() => setOpenAccordion(openAccordion === "shipping" ? ("" as any) : "shipping")}
+                    onClick={() => setOpenAccordion(openAccordion === "shipping" ? "" : "shipping")}
                     className="w-full py-3.5 flex items-center justify-between text-xs font-mono-luxury uppercase text-zinc-900 tracking-wider font-semibold"
                   >
-                    <span>Acquisition &amp; Fort Lauderdale Pickup</span>
+                    <span>Acquisition &amp; Coral Springs Pickup</span>
                     <span>{openAccordion === "shipping" ? "−" : "+"}</span>
                   </button>
                   {openAccordion === "shipping" && (
                     <div className="pb-4 text-xs font-sans-luxury text-zinc-600 space-y-2 leading-relaxed">
                       {isPickupOnly ? (
                         <div className="rounded-xl bg-amber-50/80 border border-amber-200/80 p-3.5 text-amber-950">
-                          <strong className="block font-medium">Atelier Collection Only (Fort Lauderdale, FL)</strong>
-                          This work weighs {product.weightLbs} lbs. In accordance with studio policy, heavy architectural timber cannot be entrusted to standard parcel networks. Private pickup appointment is scheduled at our atelier (1104 NE 3rd Ave). Loading assist is provided.
+                          <strong className="block font-medium">Atelier Collection Only (Coral Springs, FL)</strong>
+                          This work weighs {product.weightLbs} lbs. In accordance with studio policy, heavy architectural timber cannot be entrusted to standard parcel networks. Private pickup is arranged in Coral Springs; the address is shared after confirmation.
                         </div>
                       ) : (
                         <div className="rounded-xl bg-zinc-50 border border-zinc-200 p-3.5 text-zinc-900">
@@ -193,7 +196,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                 </button>
                 <span className="w-8 text-center font-medium">{quantity}</span>
                 <button
-                  onClick={() => setQuantity((q) => q + 1)}
+                  onClick={() => setQuantity((q) => Math.min(product.stockCount, q + 1))}
                   className="h-8 w-8 rounded-full hover:bg-white flex items-center justify-center transition-colors"
                 >
                   +
@@ -202,14 +205,16 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
 
               <button
                 onClick={handleAddToCart}
-                disabled={added}
+                disabled={added || unavailable}
                 className={`flex-1 rounded-full py-3.5 px-6 font-sans-luxury text-xs tracking-wider uppercase font-medium transition-all duration-300 shadow-md flex items-center justify-center gap-2 active:scale-98 ${
                   added
                     ? "bg-zinc-900 text-white"
                     : "bg-zinc-950 hover:bg-zinc-800 text-white"
                 }`}
               >
-                {added ? (
+                {unavailable ? (
+                  <span>Sold Out</span>
+                ) : added ? (
                   <span>Acquisition Confirmed ✓</span>
                 ) : (
                   <span>

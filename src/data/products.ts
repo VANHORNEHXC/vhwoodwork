@@ -15,7 +15,7 @@ export const PRODUCTS: Product[] = [
     finish: "UV-Resistant Marine Matte Hardwax-Oil",
     dimensions: '14.5"W × 14.5"D × 18.0"H',
     joinery: "Exposed through-mortise & wedged walnut tenons",
-    leadTime: "In Stock &bull; Fort Lauderdale Atelier",
+    leadTime: "In Stock &bull; Coral Springs Atelier",
     inStock: true,
     stockCount: 3,
     description:
@@ -24,7 +24,7 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=1000&q=80",
-    provenance: "Handmade at VH Woodwork Atelier — Fort Lauderdale, FL",
+    provenance: "Handmade at VH Woodwork Atelier — Coral Springs, FL",
   },
   {
     id: "vhw-02",
@@ -49,7 +49,7 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1615873968403-89e068629265?auto=format&fit=crop&w=1000&q=80",
-    provenance: "Batch 08 — Fort Lauderdale Atelier, FL",
+    provenance: "Batch 08 — Coral Springs Atelier, FL",
   },
   {
     id: "vhw-03",
@@ -74,7 +74,7 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=1000&q=80",
-    provenance: "Atelier Collection — Fort Lauderdale, FL",
+    provenance: "Atelier Collection — Coral Springs, FL",
   },
   {
     id: "vhw-04",
@@ -99,7 +99,7 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=1000&q=80",
-    provenance: "Hand-carved in Fort Lauderdale, FL",
+    provenance: "Hand-carved in Coral Springs, FL",
   },
   {
     id: "vhw-05",
@@ -124,7 +124,7 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1580481077195-73ab013f33d7?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1000&q=80",
-    provenance: "Limited Edition of 10 — Fort Lauderdale, FL",
+    provenance: "Limited Edition of 10 — Coral Springs, FL",
   },
   {
     id: "vhw-06",
@@ -149,7 +149,7 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1615873968403-89e068629265?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=1000&q=80",
-    provenance: "Turned by hand in Fort Lauderdale, FL",
+    provenance: "Turned by hand in Coral Springs, FL",
   },
   {
     id: "vhw-07",
@@ -169,12 +169,12 @@ export const PRODUCTS: Product[] = [
     inStock: true,
     stockCount: 1,
     description:
-      "Originally designed for a waterfront residence in Fort Lauderdale. Built from consecutive solid Florida river cypress beams running full 6-foot spans. Marine-grade stainless steel base plates resist coastal air.",
+      "Originally designed for a South Florida waterfront residence. Built from consecutive solid Florida river cypress beams running full 6-foot spans. Marine-grade stainless steel base plates resist coastal air.",
     primaryImage:
       "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1000&q=80",
-    provenance: "VH Woodwork Atelier — Fort Lauderdale, FL",
+    provenance: "VH Woodwork Atelier — Coral Springs, FL",
   },
   {
     id: "vhw-08",
@@ -199,7 +199,7 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=1000&q=80",
-    provenance: "Custom commission — Fort Lauderdale Atelier, FL",
+    provenance: "Custom commission — Coral Springs Atelier, FL",
   },
   {
     id: "vhw-09",
@@ -224,7 +224,7 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1590736969955-71cc94801759?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=1000&q=80",
-    provenance: "Atelier Object — Fort Lauderdale, FL",
+    provenance: "Atelier Object — Coral Springs, FL",
   },
   {
     id: "vhw-10",
@@ -240,7 +240,7 @@ export const PRODUCTS: Product[] = [
     finish: "Hand-rubbed Tung Oil & Poly combo",
     dimensions: '68.0"W × 19.0"D × 31.0"H',
     joinery: "Concealed miters, dovetailed drawer boxes, hand-routed tambour slats",
-    leadTime: "Made to Order &bull; Fort Lauderdale Atelier",
+    leadTime: "Made to Order &bull; Coral Springs Atelier",
     inStock: true,
     stockCount: 1,
     description:
@@ -249,7 +249,7 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=1000&q=80",
-    provenance: "Masterpiece Piece — Fort Lauderdale, FL",
+    provenance: "Masterpiece Piece — Coral Springs, FL",
   },
   {
     id: "vhw-11",
@@ -274,7 +274,7 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=1000&q=80",
-    provenance: "Exterior Series — Fort Lauderdale, FL",
+    provenance: "Exterior Series — Coral Springs, FL",
   },
   {
     id: "vhw-12",
@@ -290,7 +290,7 @@ export const PRODUCTS: Product[] = [
     finish: "Natural Unsealed Cypress (silvers with age) or Matte Seal",
     dimensions: '28.0"W × 34.0"D × 27.0"H',
     joinery: "Mortise and tenon pinned with brass dowels",
-    leadTime: "In Stock &bull; Fort Lauderdale Atelier",
+    leadTime: "In Stock &bull; Coral Springs Atelier",
     inStock: true,
     stockCount: 2,
     description:
@@ -299,6 +299,6 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1580481077195-73ab013f33d7?auto=format&fit=crop&w=1000&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1000&q=80",
-    provenance: "Exterior Series — Fort Lauderdale, FL",
+    provenance: "Exterior Series — Coral Springs, FL",
   },
 ];
