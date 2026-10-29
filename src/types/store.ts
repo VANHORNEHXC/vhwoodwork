@@ -1,32 +1,34 @@
 export type WoodCategory = 
   | "all" 
-  | "furniture" 
-  | "studio-objects" 
+  | "interior" 
+  | "exterior" 
   | "seating" 
   | "tables" 
-  | "storage";
+  | "storage" 
+  | "studio-objects";
 
 export interface Product {
   id: string;
   lotNumber: string; // e.g. "LOT #01"
-  itemCode: string; // e.g. "VHW-ST-04"
+  itemCode: string; // e.g. "VHW-ST-01"
   name: string;
   tagline: string;
   category: "seating" | "tables" | "storage" | "studio-objects";
+  placement: "interior" | "exterior"; // INTERIOR vs EXTERIOR
   priceCents: number;
-  weightLbs: number; // The crucial rule: < 10 lbs vs >= 10 lbs
-  woodSpecies: string; // e.g. "Solid Appalachian White Oak"
-  finish: string; // e.g. "Matte Hardwax Oil (Zero VOC)"
-  dimensions: string; // e.g. '18"W × 18"D × 19"H'
-  joinery: string; // e.g. "Through-tenons with walnut wedges"
-  leadTime: string; // e.g. "In Stock (Ready for pickup/ship)" | "Made to Order (2-3 weeks)"
+  weightLbs: number; // Stored for backend shipping calculation (<10 vs >10)
+  woodSpecies: string;
+  finish: string;
+  dimensions: string;
+  joinery: string;
+  leadTime: string;
   inStock: boolean;
   stockCount: number;
   isSoldOut?: boolean;
   description: string;
   primaryImage: string;
   secondaryImage: string;
-  provenance: string; // e.g. "Crafted by hand in Fort Lauderdale, FL"
+  provenance: string;
 }
 
 export interface CartItem {
@@ -59,4 +61,3 @@ export interface ShippingDetails {
 }
 
 export type PaymentMethod = "stripe" | "paypal";
-

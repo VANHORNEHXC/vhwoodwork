@@ -14,22 +14,22 @@ export function ProductTable({ products, onOpenQuickView }: ProductTableProps) {
   const { addItem } = useCart();
 
   return (
-    <div className="overflow-x-auto ff-glass rounded-2xl p-2 shadow-xs">
-      <table className="w-full text-left font-mono-spec text-xs border-collapse">
+    <div className="overflow-x-auto glass-luxury rounded-3xl p-3 sm:p-5 shadow-xs">
+      <table className="w-full text-left font-sans-luxury text-xs border-collapse">
         <thead>
-          <tr className="border-b border-zinc-200/60 text-zinc-400 uppercase tracking-wider text-[10px]">
+          <tr className="border-b border-zinc-200/60 text-zinc-400 font-mono-luxury uppercase tracking-widest text-[10px]">
             <th className="p-3 w-16">Preview</th>
-            <th className="p-3">Lot / Code</th>
-            <th className="p-3">Object</th>
-            <th className="p-3 hidden md:table-cell">Species &amp; Joinery</th>
+            <th className="p-3">Reference</th>
+            <th className="p-3">Work Title</th>
+            <th className="p-3 hidden md:table-cell">Timber &amp; Joinery</th>
             <th className="p-3 hidden lg:table-cell">Dimensions</th>
-            <th className="p-3">Weight</th>
-            <th className="p-3">Fulfillment</th>
-            <th className="p-3 text-right">Price</th>
-            <th className="p-3 text-center">Add</th>
+            <th className="p-3">Mass</th>
+            <th className="p-3">Fulfillment Directive</th>
+            <th className="p-3 text-right">Acquisition</th>
+            <th className="p-3 text-center">Acquire</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-zinc-100">
+        <tbody className="divide-y divide-zinc-100/80">
           {products.map((product) => {
             const isPickupOnly = product.weightLbs >= 10;
             return (
@@ -48,39 +48,39 @@ export function ProductTable({ products, onOpenQuickView }: ProductTableProps) {
                     />
                   </div>
                 </td>
-                <td className="p-3 whitespace-nowrap">
+                <td className="p-3 whitespace-nowrap font-mono-luxury text-[11px]">
                   <span className="font-semibold text-zinc-900 block">{product.lotNumber}</span>
                   <span className="text-[10px] text-zinc-400">{product.itemCode}</span>
                 </td>
                 <td className="p-3">
-                  <div className="font-display font-semibold text-zinc-950 text-sm">{product.name}</div>
+                  <div className="font-roffelia text-lg text-zinc-950 font-normal leading-tight">{product.name}</div>
                   <div className="text-[11px] text-zinc-400 truncate max-w-xs">{product.tagline}</div>
                 </td>
                 <td className="p-3 hidden md:table-cell">
                   <div className="text-zinc-800 font-medium">{product.woodSpecies}</div>
-                  <div className="text-[10px] text-zinc-400">{product.joinery}</div>
+                  <div className="text-[10px] text-zinc-400 font-mono-luxury">{product.joinery}</div>
                 </td>
-                <td className="p-3 hidden lg:table-cell text-zinc-600 whitespace-nowrap">
+                <td className="p-3 hidden lg:table-cell text-zinc-600 whitespace-nowrap font-mono-luxury text-[11px]">
                   {product.dimensions}
                 </td>
-                <td className="p-3 whitespace-nowrap">
-                  <span className={`font-semibold ${isPickupOnly ? "text-amber-800" : "text-emerald-800"}`}>
+                <td className="p-3 whitespace-nowrap font-mono-luxury">
+                  <span className={`font-medium ${isPickupOnly ? "text-amber-800" : "text-emerald-800"}`}>
                     {product.weightLbs} lbs
                   </span>
                 </td>
                 <td className="p-3 whitespace-nowrap">
                   {isPickupOnly ? (
-                    <span className="inline-block rounded-full bg-amber-400/80 text-amber-950 px-2.5 py-0.5 text-[10px] font-semibold">
-                      Pickup Only (FL)
+                    <span className="inline-block rounded-full bg-amber-100/90 text-amber-950 border border-amber-300/60 px-2.5 py-0.5 text-[10px] font-mono-luxury">
+                      Atelier Collection (FL)
                     </span>
                   ) : (
-                    <span className="inline-block rounded-full bg-emerald-100/80 text-emerald-900 px-2.5 py-0.5 text-[10px] font-semibold">
-                      Ships Nationwide
+                    <span className="inline-block rounded-full bg-emerald-50 text-emerald-900 border border-emerald-300/60 px-2.5 py-0.5 text-[10px] font-mono-luxury">
+                      Insured Transit
                     </span>
                   )}
                 </td>
-                <td className="p-3 text-right font-semibold text-sm whitespace-nowrap text-zinc-950">
-                  ${(product.priceCents / 100).toLocaleString("en-US", { minimumFractionDigits: 0 })}
+                <td className="p-3 text-right font-mono-luxury font-medium text-sm whitespace-nowrap text-zinc-950">
+                  ${(product.priceCents / 100).toLocaleString("en-US", { minimumFractionDigits: 0 })} USD
                 </td>
                 <td className="p-3 text-center whitespace-nowrap">
                   <button
@@ -88,7 +88,7 @@ export function ProductTable({ products, onOpenQuickView }: ProductTableProps) {
                       e.stopPropagation();
                       addItem(product, 1);
                     }}
-                    className="rounded-full bg-zinc-900 hover:bg-black text-white px-3 py-1.5 text-[11px] font-medium transition-all shadow-2xs active:scale-95"
+                    className="rounded-full bg-zinc-900 hover:bg-black text-white px-3 py-1.5 text-[11px] font-sans-luxury tracking-wide transition-all shadow-2xs active:scale-95"
                   >
                     + Bag
                   </button>

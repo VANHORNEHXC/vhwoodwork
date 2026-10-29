@@ -1,101 +1,107 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fbfbfa;
-  --foreground: #111110;
-  --muted: #71717a;
-  --glass-bg: rgba(255, 255, 255, 0.72);
-  --glass-border: rgba(255, 255, 255, 0.65);
-  --glass-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+  --bg-atelier: #fcfbf9;
+  --fg-atelier: #141312;
+  --fg-muted: #73716b;
+  --fg-subtle: #a3a199;
+  --accent-gold: #c59b27;
+  --glass-champagne: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-shadow: 0 20px 50px -15px rgba(20, 19, 18, 0.04);
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-atelier);
+  color: var(--fg-atelier);
+  font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "SF Pro Text", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+/* ROFFELIA / Haute Couture Luxury Serif Typography */
+@font-face {
+  font-family: 'Roffelia';
+  src: local('Roffelia'), local('Roffelia-Regular'), local('Cormorant Garamond'), local('Playfair Display'), local('Didot');
+  font-display: swap;
+}
+
+.font-roffelia {
+  font-family: 'Roffelia', 'Cormorant Garamond', 'Playfair Display', Didot, 'Bodoni MT', Georgia, serif;
+  letter-spacing: 0.01em;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "liga";
+}
+
+.font-sans-luxury {
+  font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "SF Pro Text", "Helvetica Neue", sans-serif;
   letter-spacing: -0.015em;
 }
 
-/* FF-Shop style Swiss Typography */
-.font-display {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-  letter-spacing: -0.035em;
-}
-
-.font-mono-spec {
+.font-mono-luxury {
   font-family: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
 }
 
-/* FF-Shop Glassmorphic Primitives */
-.ff-glass {
+/* Ultra-Luxury Glassmorphism Primitives */
+.glass-luxury {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 16px 40px -12px rgba(20, 19, 18, 0.035), 0 0 0 1px rgba(20, 19, 18, 0.025);
+}
+
+.glass-card-luxury {
   background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 10px 30px -10px rgba(20, 19, 18, 0.03), 0 0 0 1px rgba(20, 19, 18, 0.02);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.ff-glass-dark {
-  background: rgba(14, 14, 16, 0.84);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
-}
-
-.ff-card {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03), 0 0 0 1px rgba(0, 0, 0, 0.03);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.ff-card:hover {
+.glass-card-luxury:hover {
   background: rgba(255, 255, 255, 0.96);
   transform: translateY(-4px);
-  border-color: rgba(0, 0, 0, 0.12);
-  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  border-color: rgba(197, 155, 39, 0.3);
+  box-shadow: 0 28px 60px -16px rgba(20, 19, 18, 0.08), 0 0 0 1px rgba(197, 155, 39, 0.15);
 }
 
-.ff-pill {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+.glass-pill-luxury {
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.03);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 10px -2px rgba(20, 19, 18, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.ff-pill:hover {
+.glass-pill-luxury:hover {
   background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(0, 0, 0, 0.15);
+  border-color: rgba(20, 19, 18, 0.15);
   transform: translateY(-1px);
 }
 
-.ff-pill-active {
-  background: #111110;
-  color: #ffffff;
-  border: 1px solid #111110;
-  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.15);
+.glass-pill-active {
+  background: #141312 !important;
+  color: #ffffff !important;
+  border-color: #141312 !important;
+  box-shadow: 0 6px 18px -4px rgba(20, 19, 18, 0.25);
 }
 
-/* Custom subtle scrollbar */
+/* Smooth quiet scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(20, 19, 18, 0.12);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(20, 19, 18, 0.25);
 }

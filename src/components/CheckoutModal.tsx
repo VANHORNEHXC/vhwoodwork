@@ -31,7 +31,6 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Form handling
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (deliveryMethod === "pickup") {
@@ -68,7 +67,7 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                 name: pickupDetails.customerName,
                 email: pickupDetails.customerEmail,
                 phone: pickupDetails.customerPhone,
-                pickupDate: pickupDetails.pickupDate || "Next Available Studio Day",
+                pickupDate: pickupDetails.pickupDate || "Next Available Atelier Day",
                 pickupTimeSlot: pickupDetails.pickupTimeSlot,
                 vehicleType: pickupDetails.vehicleType,
                 notes: pickupDetails.notes,
@@ -128,78 +127,81 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-md overflow-y-auto font-sans-luxury">
       <div
-        className="relative my-6 w-full max-w-2xl border border-white/60 bg-white/90 backdrop-blur-2xl text-zinc-900 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] transition-all"
+        className="relative my-6 w-full max-w-2xl glass-luxury rounded-3xl p-6 sm:p-10 text-zinc-900 shadow-2xl transition-all"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 bg-zinc-950/90 backdrop-blur-md px-5 py-3 text-white">
-          <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider">
-            <span className="font-bold text-amber-400">CHECKOUT DISPATCH</span>
-            <span className="text-zinc-500">//</span>
-            <span>FORT LAUDERDALE, FL</span>
+        <div className="flex items-center justify-between pb-5 border-b border-zinc-200/60">
+          <div>
+            <span className="font-mono-luxury text-[10px] uppercase tracking-widest text-zinc-400 block">
+              Private Concierge &bull; Fort Lauderdale
+            </span>
+            <h3 className="font-roffelia font-normal text-2xl sm:text-3xl text-zinc-950 mt-1">
+              Acquisition Dispatch
+            </h3>
           </div>
           <button
             onClick={onClose}
-            className="text-zinc-400 hover:text-white font-mono text-xs uppercase tracking-widest px-2 py-0.5 border border-zinc-700"
+            className="rounded-full bg-zinc-100/80 hover:bg-zinc-200 text-zinc-700 h-8 w-8 flex items-center justify-center transition-colors shadow-2xs"
           >
-            [CLOSE]
+            ✕
           </button>
         </div>
 
-        <form onSubmit={handleSubmitOrder} className="p-6 space-y-6">
+        <form onSubmit={handleSubmitOrder} className="pt-6 space-y-6">
           {/* Order Snapshot & Fulfillment Type */}
-          <div className="border border-white/80 bg-white/60 backdrop-blur-md p-4 font-mono text-xs space-y-2 shadow-xs">
-            <div className="flex items-center justify-between font-bold text-zinc-950 uppercase border-b border-zinc-200/60 pb-1.5">
-              <span>FULFILLMENT SPECIFICATION:</span>
+          <div className="rounded-2xl bg-[#f9f8f5] border border-zinc-200/60 p-4 font-sans-luxury text-xs space-y-2">
+            <div className="flex items-center justify-between font-medium text-zinc-950 uppercase font-mono-luxury text-[11px] border-b border-zinc-200/60 pb-2">
+              <span>Fulfillment Protocol:</span>
               <span className={requiresPickup ? "text-amber-800" : "text-emerald-800"}>
                 {deliveryMethod === "pickup"
-                  ? "LOCAL STUDIO PICKUP (FORT LAUDERDALE)"
-                  : "NATIONWIDE TRACKED SHIPPING"}
+                  ? "Atelier Collection (Fort Lauderdale, FL)"
+                  : "Insured Nationwide Transit"}
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px] text-zinc-600">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs text-zinc-600 font-sans-luxury">
               <div>
-                <span className="block text-[10px] text-zinc-400">TOTAL WEIGHT:</span>
-                <span className="font-bold text-zinc-950">{totalWeightLbs} LBS</span>
+                <span className="block text-[10px] font-mono-luxury text-zinc-400 uppercase">Mass:</span>
+                <span className="font-medium text-zinc-950">{totalWeightLbs} lbs</span>
               </div>
               <div>
-                <span className="block text-[10px] text-zinc-400">PIECES:</span>
-                <span className="font-bold text-zinc-950">{items.length} LOTS</span>
+                <span className="block text-[10px] font-mono-luxury text-zinc-400 uppercase">Works:</span>
+                <span className="font-medium text-zinc-950">{items.length} lots</span>
               </div>
               <div>
-                <span className="block text-[10px] text-zinc-400">FULFILLMENT FEE:</span>
-                <span className="font-bold text-zinc-950">
-                  {deliveryMethod === "pickup" ? "$0.00 (FREE)" : `$${(shippingFeeCents / 100).toFixed(2)}`}
+                <span className="block text-[10px] font-mono-luxury text-zinc-400 uppercase">Transit Fee:</span>
+                <span className="font-medium text-zinc-950">
+                  {deliveryMethod === "pickup" ? "Complimentary" : `$${(shippingFeeCents / 100).toFixed(2)}`}
                 </span>
               </div>
               <div>
-                <span className="block text-[10px] text-zinc-400">TOTAL DUE:</span>
-                <span className="font-bold text-zinc-950">${(grandTotalCents / 100).toFixed(2)}</span>
+                <span className="block text-[10px] font-mono-luxury text-zinc-400 uppercase">Total:</span>
+                <span className="font-semibold text-zinc-950">${(grandTotalCents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}</span>
               </div>
             </div>
           </div>
 
           {/* Customer & Fulfillment Form */}
           {deliveryMethod === "pickup" ? (
-            /* FORT LAUDERDALE STUDIO PICKUP FORM */
-            <div className="space-y-4 font-mono text-xs">
-              <div className="border-l-2 border-amber-500 pl-3">
-                <h4 className="font-bold text-zinc-950 uppercase text-xs">
-                  FORT LAUDERDALE STUDIO PICKUP SCHEDULE
+            /* FORT LAUDERDALE ATELIER PICKUP FORM */
+            <div className="space-y-4 text-xs font-sans-luxury">
+              <div className="border-l-2 border-amber-500/80 pl-3.5">
+                <h4 className="font-semibold text-zinc-950 text-xs">
+                  Atelier Collection Appointment (Fort Lauderdale, FL)
                 </h4>
-                <p className="text-[11px] text-zinc-600 mt-0.5">
-                  Workshop Location: <strong>1104 NE 3rd Ave, Fort Lauderdale, FL 33304</strong>.
-                  Studio team will prep your piece and provide load-in assistance.
+                <p className="text-[11px] text-zinc-500 mt-0.5">
+                  Workshop Atelier: <strong>1104 NE 3rd Ave, Fort Lauderdale, FL 33304</strong>.
+                  Our crew prepares your work with protective blankets and coordinates vehicle loading.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div>
-                  <label className="block text-[11px] text-zinc-700 font-bold uppercase mb-1">
-                    FULL NAME *
+                  <label className="block text-[11px] text-zinc-600 font-medium uppercase font-mono-luxury mb-1">
+                    Collector Full Name *
                   </label>
                   <input
                     type="text"
@@ -207,13 +209,13 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                     name="customerName"
                     value={pickupDetails.customerName}
                     onChange={handleInputChange}
-                    placeholder="e.g. John Miller"
-                    className="w-full border border-zinc-300 bg-white/80 backdrop-blur-xs p-2 font-mono text-xs text-zinc-950 focus:border-black outline-hidden"
+                    placeholder="e.g. Eleanor Vance"
+                    className="w-full rounded-xl border border-zinc-200 bg-white/90 p-2.5 text-xs text-zinc-950 focus:border-zinc-950 outline-hidden"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] text-zinc-700 font-bold uppercase mb-1">
-                    EMAIL ADDRESS *
+                  <label className="block text-[11px] text-zinc-600 font-medium uppercase font-mono-luxury mb-1">
+                    Direct Email *
                   </label>
                   <input
                     type="email"
@@ -221,13 +223,13 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                     name="customerEmail"
                     value={pickupDetails.customerEmail}
                     onChange={handleInputChange}
-                    placeholder="john@example.com"
-                    className="w-full border border-zinc-300 bg-white/80 backdrop-blur-xs p-2 font-mono text-xs text-zinc-950 focus:border-black outline-hidden"
+                    placeholder="eleanor@estate.com"
+                    className="w-full rounded-xl border border-zinc-200 bg-white/90 p-2.5 text-xs text-zinc-950 focus:border-zinc-950 outline-hidden"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] text-zinc-700 font-bold uppercase mb-1">
-                    PHONE (FOR PICKUP COORDINATION) *
+                  <label className="block text-[11px] text-zinc-600 font-medium uppercase font-mono-luxury mb-1">
+                    Telephone (Concierge Coordination) *
                   </label>
                   <input
                     type="tel"
@@ -236,18 +238,18 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                     value={pickupDetails.customerPhone}
                     onChange={handleInputChange}
                     placeholder="(954) 555-0199"
-                    className="w-full border border-zinc-300 bg-white/80 backdrop-blur-xs p-2 font-mono text-xs text-zinc-950 focus:border-black outline-hidden"
+                    className="w-full rounded-xl border border-zinc-200 bg-white/90 p-2.5 text-xs text-zinc-950 focus:border-zinc-950 outline-hidden"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] text-zinc-700 font-bold uppercase mb-1">
-                    PREFERRED PICKUP TIME SLOT
+                  <label className="block text-[11px] text-zinc-600 font-medium uppercase font-mono-luxury mb-1">
+                    Preferred Collection Window
                   </label>
                   <select
                     name="pickupTimeSlot"
                     value={pickupDetails.pickupTimeSlot}
                     onChange={handleInputChange}
-                    className="w-full border border-zinc-300 bg-white/80 backdrop-blur-xs p-2 font-mono text-xs text-zinc-950 focus:border-black outline-hidden"
+                    className="w-full rounded-xl border border-zinc-200 bg-white/90 p-2.5 text-xs text-zinc-950 focus:border-zinc-950 outline-hidden"
                   >
                     <option value="10:00 AM - 12:00 PM">Morning (10:00 AM - 12:00 PM)</option>
                     <option value="12:00 PM - 2:00 PM">Midday (12:00 PM - 2:00 PM)</option>
@@ -256,36 +258,36 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                   </select>
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block text-[11px] text-zinc-700 font-bold uppercase mb-1">
-                    VEHICLE TYPE &amp; LOADING NOTES (OPTIONAL)
+                  <label className="block text-[11px] text-zinc-600 font-medium uppercase font-mono-luxury mb-1">
+                    Transport Vehicle / Loading Instructions
                   </label>
                   <input
                     type="text"
                     name="vehicleType"
                     value={pickupDetails.vehicleType}
                     onChange={handleInputChange}
-                    placeholder="e.g. Ford F-150 / SUV / Van with seats folded"
-                    className="w-full border border-zinc-300 bg-white/80 backdrop-blur-xs p-2 font-mono text-xs text-zinc-950 focus:border-black outline-hidden"
+                    placeholder="e.g. Range Rover / Escalade / Covered Van"
+                    className="w-full rounded-xl border border-zinc-200 bg-white/90 p-2.5 text-xs text-zinc-950 focus:border-zinc-950 outline-hidden"
                   />
                 </div>
               </div>
             </div>
           ) : (
             /* STANDARD SHIPPING ADDRESS FORM (< 10 LBS) */
-            <div className="space-y-4 font-mono text-xs">
-              <div className="border-l-2 border-emerald-500 pl-3">
-                <h4 className="font-bold text-zinc-950 uppercase text-xs">
-                  NATIONWIDE SHIPPING DESTINATION (&lt; 10 LBS)
+            <div className="space-y-4 text-xs font-sans-luxury">
+              <div className="border-l-2 border-emerald-500 pl-3.5">
+                <h4 className="font-semibold text-zinc-950 text-xs">
+                  Insured Nationwide Delivery (&lt; 10 lbs)
                 </h4>
-                <p className="text-[11px] text-zinc-600 mt-0.5">
-                  Packaged in reinforced studio cardboard with biodegradable wood-wool padding.
+                <p className="text-[11px] text-zinc-500 mt-0.5">
+                  Packaged in archival double-wall timber crating with full carrier insurance.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div>
-                  <label className="block text-[11px] text-zinc-700 font-bold uppercase mb-1">
-                    FULL NAME *
+                  <label className="block text-[11px] text-zinc-600 font-medium uppercase font-mono-luxury mb-1">
+                    Recipient Full Name *
                   </label>
                   <input
                     type="text"
@@ -294,12 +296,12 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                     value={shippingDetails.customerName}
                     onChange={handleInputChange}
                     placeholder="Full recipient name"
-                    className="w-full border border-zinc-300 bg-white/80 backdrop-blur-xs p-2 font-mono text-xs text-zinc-950 focus:border-black outline-hidden"
+                    className="w-full rounded-xl border border-zinc-200 bg-white/90 p-2.5 text-xs text-zinc-950 focus:border-zinc-950 outline-hidden"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] text-zinc-700 font-bold uppercase mb-1">
-                    EMAIL FOR TRACKING *
+                  <label className="block text-[11px] text-zinc-600 font-medium uppercase font-mono-luxury mb-1">
+                    Direct Email *
                   </label>
                   <input
                     type="email"
@@ -307,13 +309,13 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                     name="customerEmail"
                     value={shippingDetails.customerEmail}
                     onChange={handleInputChange}
-                    placeholder="recipient@example.com"
-                    className="w-full border border-zinc-300 bg-white/80 backdrop-blur-xs p-2 font-mono text-xs text-zinc-950 focus:border-black outline-hidden"
+                    placeholder="recipient@estate.com"
+                    className="w-full rounded-xl border border-zinc-200 bg-white/90 p-2.5 text-xs text-zinc-950 focus:border-zinc-950 outline-hidden"
                   />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block text-[11px] text-zinc-700 font-bold uppercase mb-1">
-                    STREET ADDRESS *
+                  <label className="block text-[11px] text-zinc-600 font-medium uppercase font-mono-luxury mb-1">
+                    Residence Street Address *
                   </label>
                   <input
                     type="text"
@@ -321,13 +323,13 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                     name="addressLine1"
                     value={shippingDetails.addressLine1}
                     onChange={handleInputChange}
-                    placeholder="123 Woodworker Blvd, Apt 4"
-                    className="w-full border border-zinc-300 bg-white/80 backdrop-blur-xs p-2 font-mono text-xs text-zinc-950 focus:border-black outline-hidden"
+                    placeholder="Estate address, Suite, Villa"
+                    className="w-full rounded-xl border border-zinc-200 bg-white/90 p-2.5 text-xs text-zinc-950 focus:border-zinc-950 outline-hidden"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] text-zinc-700 font-bold uppercase mb-1">
-                    CITY *
+                  <label className="block text-[11px] text-zinc-600 font-medium uppercase font-mono-luxury mb-1">
+                    City *
                   </label>
                   <input
                     type="text"
@@ -336,13 +338,13 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                     value={shippingDetails.city}
                     onChange={handleInputChange}
                     placeholder="City"
-                    className="w-full border border-zinc-300 bg-white/80 backdrop-blur-xs p-2 font-mono text-xs text-zinc-950 focus:border-black outline-hidden"
+                    className="w-full rounded-xl border border-zinc-200 bg-white/90 p-2.5 text-xs text-zinc-950 focus:border-zinc-950 outline-hidden"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[11px] text-zinc-700 font-bold uppercase mb-1">
-                      STATE *
+                    <label className="block text-[11px] text-zinc-600 font-medium uppercase font-mono-luxury mb-1">
+                      State *
                     </label>
                     <input
                       type="text"
@@ -352,12 +354,12 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                       onChange={handleInputChange}
                       placeholder="FL"
                       maxLength={2}
-                      className="w-full border border-zinc-300 bg-white/80 backdrop-blur-xs p-2 font-mono text-xs text-zinc-950 focus:border-black outline-hidden uppercase"
+                      className="w-full rounded-xl border border-zinc-200 bg-white/90 p-2.5 text-xs text-zinc-950 focus:border-zinc-950 outline-hidden uppercase"
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] text-zinc-700 font-bold uppercase mb-1">
-                      ZIP CODE *
+                    <label className="block text-[11px] text-zinc-600 font-medium uppercase font-mono-luxury mb-1">
+                      Postal Code *
                     </label>
                     <input
                       type="text"
@@ -366,7 +368,7 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
                       value={shippingDetails.postalCode}
                       onChange={handleInputChange}
                       placeholder="33301"
-                      className="w-full border border-zinc-300 bg-white/80 backdrop-blur-xs p-2 font-mono text-xs text-zinc-950 focus:border-black outline-hidden"
+                      className="w-full rounded-xl border border-zinc-200 bg-white/90 p-2.5 text-xs text-zinc-950 focus:border-zinc-950 outline-hidden"
                     />
                   </div>
                 </div>
@@ -375,9 +377,9 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
           )}
 
           {/* Payment Method Switcher */}
-          <div className="border-t border-zinc-200/60 pt-4 space-y-3 font-mono text-xs">
-            <span className="text-[11px] font-bold uppercase text-zinc-950 block">
-              COMMERCIAL PAYMENT GATEWAY:
+          <div className="border-t border-zinc-200/60 pt-5 space-y-3 font-sans-luxury text-xs">
+            <span className="text-[10px] font-mono-luxury uppercase tracking-widest text-zinc-400 block">
+              Certified Commercial Gateway:
             </span>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -385,20 +387,18 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
               <button
                 type="button"
                 onClick={() => setPaymentProvider("stripe")}
-                className={`p-3.5 border text-left flex flex-col justify-between transition-all ${
+                className={`p-4 rounded-2xl border text-left flex flex-col justify-between transition-all ${
                   paymentProvider === "stripe"
-                    ? "border-black bg-zinc-950 text-white shadow-md ring-1 ring-black"
-                    : "border-white/80 bg-white/80 hover:border-zinc-500 text-zinc-900 backdrop-blur-xs"
+                    ? "border-zinc-950 bg-zinc-950 text-white shadow-md ring-1 ring-zinc-950"
+                    : "border-zinc-200/80 bg-white/80 hover:border-zinc-400 text-zinc-900"
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-bold uppercase text-xs">STRIPE CHECKOUT</span>
-                  <div className="flex gap-1">
-                    <span className="h-2 w-2 rounded-full bg-current" />
-                  </div>
+                  <span className="font-semibold text-xs font-sans-luxury">STRIPE CONCIERGE</span>
+                  <span className="h-1.5 w-1.5 rounded-full bg-current" />
                 </div>
-                <p className={`text-[10px] mt-2 ${paymentProvider === "stripe" ? "text-zinc-300" : "text-zinc-500"}`}>
-                  Credit / Debit cards, Apple Pay, Google Pay, Bank Transfer.
+                <p className={`text-[11px] mt-2 ${paymentProvider === "stripe" ? "text-zinc-300" : "text-zinc-500"}`}>
+                  American Express, Visa, Mastercard, Apple Pay, Bank Wire.
                 </p>
               </button>
 
@@ -406,55 +406,55 @@ export function CheckoutModal({ initialMethod, onClose }: CheckoutModalProps) {
               <button
                 type="button"
                 onClick={() => setPaymentProvider("paypal")}
-                className={`p-3.5 border text-left flex flex-col justify-between transition-all ${
+                className={`p-4 rounded-2xl border text-left flex flex-col justify-between transition-all ${
                   paymentProvider === "paypal"
                     ? "border-amber-500 bg-[#003087] text-white shadow-md ring-1 ring-amber-500"
-                    : "border-white/80 bg-white/80 hover:border-zinc-500 text-zinc-900 backdrop-blur-xs"
+                    : "border-zinc-200/80 bg-white/80 hover:border-zinc-400 text-zinc-900"
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <span className="font-black italic text-sm text-[#ffc439]">PayPal</span>
-                  <span className="text-[9px] uppercase font-bold tracking-wider bg-amber-400 text-black px-1.5 py-0.5">
+                  <span className="text-[9px] uppercase font-mono-luxury font-medium bg-amber-400 text-black px-2 py-0.5 rounded-full">
                     COMMERCIAL
                   </span>
                 </div>
-                <p className={`text-[10px] mt-2 ${paymentProvider === "paypal" ? "text-zinc-200" : "text-zinc-500"}`}>
-                  PayPal Balance, Pay in 4 monthly installments, Venmo US.
+                <p className={`text-[11px] mt-2 ${paymentProvider === "paypal" ? "text-zinc-200" : "text-zinc-500"}`}>
+                  Commercial invoice, PayPal Credit, 4 monthly installments.
                 </p>
               </button>
             </div>
           </div>
 
           {errorMessage && (
-            <div className="border border-red-500 bg-red-50 p-3 text-red-700 font-mono text-xs">
+            <div className="rounded-xl border border-red-300 bg-red-50 p-3 text-red-700 font-sans-luxury text-xs">
               ⚠️ {errorMessage}
             </div>
           )}
 
           {/* Complete Button */}
-          <div className="border-t border-zinc-200/60 pt-4 flex flex-col gap-2">
+          <div className="border-t border-zinc-200/60 pt-5 flex flex-col gap-2">
             <button
               type="submit"
               disabled={isProcessing}
-              className={`w-full py-3.5 px-4 font-mono text-xs uppercase font-bold tracking-wider transition-all flex items-center justify-center gap-2 shadow-md ${
+              className={`w-full py-4 px-6 rounded-full font-sans-luxury text-xs uppercase tracking-wider font-semibold transition-all flex items-center justify-center gap-2 shadow-md ${
                 paymentProvider === "paypal"
                   ? "bg-[#ffc439] hover:bg-[#f6b720] text-[#003087]"
-                  : "bg-black hover:bg-zinc-800 text-white"
+                  : "bg-zinc-950 hover:bg-zinc-800 text-white"
               }`}
             >
               {isProcessing ? (
                 <>
-                  <span className="inline-block h-3 w-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  <span>AUTHORIZING {paymentProvider.toUpperCase()} DISPATCH...</span>
+                  <span className="inline-block h-3.5 w-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                  <span>AUTHORIZING TRANSACTION DISPATCH...</span>
                 </>
               ) : (
                 <span>
-                  CONFIRM &amp; PAY ${(grandTotalCents / 100).toFixed(2)} VIA {paymentProvider.toUpperCase()}
+                  CONFIRM &amp; AUTHORIZE ${(grandTotalCents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })} VIA {paymentProvider.toUpperCase()}
                 </span>
               )}
             </button>
-            <p className="text-center font-mono text-[10px] text-zinc-500">
-              Encrypted 256-bit Commercial Transaction. Sales tax (7.0%) included for Florida studio jurisdiction.
+            <p className="text-center text-[10px] font-mono-luxury text-zinc-400 pt-1">
+              Protected 256-Bit SSL Encryption &bull; Florida Sales Tax (7.0%) Included
             </p>
           </div>
         </form>

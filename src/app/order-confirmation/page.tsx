@@ -52,12 +52,11 @@ function OrderConfirmationContent() {
       if (stored) {
         setOrder(JSON.parse(stored));
       } else {
-        // Fallback simulated order if accessed directly via URL
         setOrder({
           orderId: queryOrderId || `VHW-FL-${Math.floor(100000 + Math.random() * 900000)}`,
           paymentProvider: queryProvider || "stripe",
           deliveryMethod: "pickup",
-          grandTotalCents: 176550, // $1,765.50
+          grandTotalCents: 176550,
           totalWeightLbs: 48.0,
           items: [
             {
@@ -73,8 +72,8 @@ function OrderConfirmationContent() {
             },
           ],
           customer: {
-            name: "Studio Collector",
-            email: "collector@example.com",
+            name: "Private Collector",
+            email: "collector@estate.com",
             phone: "(954) 555-0144",
             pickupDate: "Thursday, Next Week",
             pickupTimeSlot: "12:00 PM - 2:00 PM",
@@ -90,8 +89,8 @@ function OrderConfirmationContent() {
 
   if (!order) {
     return (
-      <div className="flex-1 flex items-center justify-center p-12 font-mono text-xs">
-        LOADING DISPATCH RECORD...
+      <div className="flex-1 flex items-center justify-center p-16 font-mono-luxury text-xs text-zinc-400">
+        RETRIEVING ATELIER DISPATCH RECORD...
       </div>
     );
   }
@@ -99,106 +98,101 @@ function OrderConfirmationContent() {
   const isPickup = order.deliveryMethod === "pickup";
 
   return (
-    <div className="relative flex-1 bg-[#f7f7f5] py-12 px-4 sm:px-6">
-      {/* Ambient background light gradients */}
+    <div className="relative flex-1 bg-[#fcfbf9] py-16 px-4 sm:px-6 font-sans-luxury">
+      {/* Ambient background glows */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute -top-32 left-[15%] h-[500px] w-[500px] rounded-full bg-amber-500/8 blur-[120px]" />
-        <div className="absolute bottom-[10%] right-[15%] h-[550px] w-[550px] rounded-full bg-emerald-500/6 blur-[130px]" />
+        <div className="absolute -top-32 left-[15%] h-[600px] w-[600px] rounded-full bg-amber-200/15 blur-[150px]" />
+        <div className="absolute bottom-[10%] right-[15%] h-[650px] w-[650px] rounded-full bg-stone-200/20 blur-[150px]" />
       </div>
+
       <div className="mx-auto max-w-3xl">
-        {/* Tom Sachs style workshop invoice / dispatch docket with glassmorphism */}
-        <div className="border border-white/80 bg-white/90 backdrop-blur-2xl shadow-2xl">
-          {/* Header strip */}
-          <div className="border-b-2 border-zinc-950 bg-zinc-950 px-6 py-4 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        {/* Luxury Atelier Dossier */}
+        <div className="glass-luxury rounded-3xl p-8 sm:p-12 shadow-2xl">
+          {/* Header */}
+          <div className="border-b border-zinc-200/70 pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <span className="font-mono text-xs text-amber-400 font-bold uppercase tracking-widest block">
-                OFFICIAL WORKSHOP DISPATCH DOCKET
+              <span className="font-mono-luxury text-[10px] text-amber-800 tracking-[0.2em] uppercase block mb-1">
+                Official Atelier Acquisition &bull; Fort Lauderdale
               </span>
-              <h1 className="text-xl font-black font-sans uppercase tracking-tight text-white mt-0.5">
-                VH WOODWORK — FORT LAUDERDALE, FL
+              <h1 className="text-3xl sm:text-4xl font-roffelia font-normal text-zinc-950 tracking-tight">
+                VH Woodwork &bull; Receipt Dossier
               </h1>
             </div>
-            <div className="text-right font-mono text-xs">
-              <span className="text-zinc-400 block text-[10px]">ORDER IDENTIFIER:</span>
-              <span className="text-white font-bold text-sm">{order.orderId}</span>
+            <div className="text-left sm:text-right font-mono-luxury text-xs text-zinc-400">
+              <span className="block text-[10px] uppercase">Dossier Ref</span>
+              <span className="text-zinc-900 font-semibold text-sm">{order.orderId}</span>
             </div>
           </div>
 
           {/* Status Alert Banner */}
-          <div className={`p-4 font-mono text-xs border-b border-zinc-900 ${
+          <div className={`mt-6 rounded-2xl p-4 font-sans-luxury text-xs border ${
             isPickup
-              ? "bg-amber-100 text-amber-950"
-              : "bg-emerald-100 text-emerald-950"
+              ? "bg-amber-50/80 border-amber-200/80 text-amber-950"
+              : "bg-emerald-50/80 border-emerald-200/80 text-emerald-950"
           }`}>
-            <div className="flex items-center gap-2 font-bold uppercase text-xs">
+            <div className="flex items-center gap-2 font-medium font-mono-luxury text-[11px] uppercase tracking-wider">
               <span className="inline-block h-2 w-2 rounded-full bg-current" />
               <span>
                 {isPickup
-                  ? "✓ PAYMENT CONFIRMED — STUDIO PICKUP RESERVED IN FORT LAUDERDALE, FL"
-                  : "✓ PAYMENT CONFIRMED — NATIONWIDE PARCEL DISPATCH QUEUED"}
+                  ? "Acquisition Confirmed &bull; Atelier Collection Reserved in Fort Lauderdale, FL"
+                  : "Acquisition Confirmed &bull; Insured Nationwide Transit Queued"}
               </span>
             </div>
-            <p className="mt-1 text-[11px] leading-relaxed">
+            <p className="mt-1.5 text-xs text-zinc-600 leading-relaxed">
               {isPickup
-                ? "This order contains solid wood pieces over 10 lbs. Studio technicians are preparing and conditioning your timber piece for inspection and loading."
-                : "This order is under 10 lbs. Studio technicians will custom-package your object in reinforced double-wall cartons with tracking dispatch within 24-48 hours."}
+                ? "This acquisition includes solid hardwood pieces over 10 lbs. Studio technicians are preparing and conditioning your timber piece for inspection and private collection."
+                : "This acquisition is under 10 lbs. Our crew will custom-crate your piece in reinforced cartons with full insured tracking within 24–48 hours."}
             </p>
           </div>
 
-          <div className="p-6 space-y-6">
+          <div className="mt-8 space-y-6">
             {/* Fulfillment Directives Box */}
-            <div className="border border-zinc-900 bg-zinc-50 p-4 font-mono text-xs space-y-3">
-              <div className="flex items-center justify-between border-b border-zinc-300 pb-2">
-                <span className="font-bold text-zinc-950 uppercase">
-                  {isPickup ? "STUDIO PICKUP INSTRUCTIONS:" : "SHIPPING DESTINATION:"}
+            <div className="rounded-2xl bg-[#f9f8f5] border border-zinc-200/60 p-5 font-sans-luxury text-xs space-y-3">
+              <div className="flex items-center justify-between border-b border-zinc-200/60 pb-2.5">
+                <span className="font-mono-luxury text-[11px] font-semibold text-zinc-950 uppercase tracking-wider">
+                  {isPickup ? "Atelier Collection Directive:" : "Delivery Destination:"}
                 </span>
-                <span className="bg-black text-white px-2 py-0.5 text-[10px] font-bold uppercase">
-                  WEIGHT: {order.totalWeightLbs} LBS
+                <span className="rounded-full bg-zinc-950 text-white px-3 py-0.5 text-[10px] font-mono-luxury">
+                  Mass: {order.totalWeightLbs} lbs
                 </span>
               </div>
 
               {isPickup ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <span className="text-zinc-600 block text-[10px] uppercase font-semibold">STUDIO LOCATION:</span>
-                    <p className="font-bold text-zinc-950 mt-0.5">
-                      VH WOODWORK STUDIO
+                    <span className="text-zinc-400 font-mono-luxury block text-[10px] uppercase">Atelier Location:</span>
+                    <p className="font-semibold text-zinc-950 mt-1">
+                      VH WOODWORK ATELIER
                       <br />
                       1104 NE 3rd Ave
                       <br />
                       Fort Lauderdale, FL 33304
                     </p>
                     <p className="text-[11px] text-zinc-500 mt-1">
-                      (Just off Sunrise Blvd &amp; US-1 • Easy bay loading)
+                      Broward County &bull; Ground loading bay access
                     </p>
                   </div>
                   <div>
-                    <span className="text-zinc-600 block text-[10px] uppercase font-semibold">PICKUP WINDOW:</span>
-                    <p className="font-bold text-zinc-950 mt-0.5">
-                      {order.customer?.pickupDate || "Tue–Sat, 10am–5pm"}
+                    <span className="text-zinc-400 font-mono-luxury block text-[10px] uppercase">Collection Appointment:</span>
+                    <p className="font-semibold text-zinc-950 mt-1">
+                      {order.customer?.pickupDate || "Tue–Sat, 10:00–17:00 EST"}
                     </p>
-                    <p className="text-zinc-700 text-[11px]">
-                      Time Slot: {order.customer?.pickupTimeSlot || "Coordinated by phone"}
+                    <p className="text-zinc-600 text-[11px]">
+                      Window: {order.customer?.pickupTimeSlot || "Coordinated by concierge"}
                     </p>
                     {order.customer?.vehicleType && (
-                      <p className="text-zinc-500 text-[10px] mt-1">
+                      <p className="text-zinc-500 text-[11px] mt-0.5">
                         Vehicle: {order.customer.vehicleType}
                       </p>
                     )}
                   </div>
-                  <div className="sm:col-span-2 bg-white border border-zinc-300 p-2.5 text-[11px] text-zinc-700">
-                    <strong className="text-black uppercase">Studio Loading Notice:</strong> Heavy solid hardwood objects are wrapped in protective bubble foam and heavy mover blankets. Our studio crew will assist with vehicle loading and tie-downs.
-                  </div>
                 </div>
               ) : (
                 <div className="text-xs space-y-1">
-                  <p className="font-bold text-zinc-950">{order.customer?.name}</p>
-                  <p className="text-zinc-700">{order.customer?.address}</p>
-                  <p className="text-zinc-700">
+                  <p className="font-semibold text-zinc-950">{order.customer?.name}</p>
+                  <p className="text-zinc-600">{order.customer?.address}</p>
+                  <p className="text-zinc-600">
                     {order.customer?.city}, {order.customer?.state} {order.customer?.postalCode}
-                  </p>
-                  <p className="text-zinc-500 text-[10px] pt-1">
-                    Tracking number will be emailed to {order.customer?.email} as soon as carrier scans the parcel.
                   </p>
                 </div>
               )}
@@ -206,36 +200,36 @@ function OrderConfirmationContent() {
 
             {/* Line Items Table */}
             <div>
-              <span className="font-mono text-xs font-bold uppercase text-zinc-950 block mb-2">
-                ACQUIRED LOTS &amp; SPECIFICATIONS:
+              <span className="font-mono-luxury text-[11px] uppercase tracking-wider text-zinc-400 block mb-2.5">
+                Acquired Works:
               </span>
-              <table className="w-full text-left font-mono text-xs border border-zinc-900">
+              <table className="w-full text-left font-sans-luxury text-xs border border-zinc-200/60 rounded-xl overflow-hidden">
                 <thead>
-                  <tr className="bg-zinc-100 border-b border-zinc-900 text-[10px] uppercase text-zinc-600">
-                    <th className="p-2.5">LOT / CODE</th>
-                    <th className="p-2.5">DESCRIPTION &amp; TIMBER</th>
-                    <th className="p-2.5 text-center">WEIGHT</th>
-                    <th className="p-2.5 text-center">QTY</th>
-                    <th className="p-2.5 text-right">TOTAL</th>
+                  <tr className="bg-zinc-100/60 border-b border-zinc-200/60 text-[10px] font-mono-luxury uppercase text-zinc-500">
+                    <th className="p-3">Reference</th>
+                    <th className="p-3">Work &amp; Timber</th>
+                    <th className="p-3 text-center">Mass</th>
+                    <th className="p-3 text-center">Qty</th>
+                    <th className="p-3 text-right">Acquisition</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-200">
+                <tbody className="divide-y divide-zinc-100">
                   {order.items.map((item, idx) => (
                     <tr key={idx}>
-                      <td className="p-2.5 whitespace-nowrap font-bold text-black">
+                      <td className="p-3 whitespace-nowrap font-mono-luxury text-zinc-900 font-semibold">
                         {item.product.lotNumber}
-                        <span className="block text-[10px] font-normal text-zinc-500">{item.product.itemCode}</span>
+                        <span className="block text-[10px] font-normal text-zinc-400">{item.product.itemCode}</span>
                       </td>
-                      <td className="p-2.5">
-                        <div className="font-bold text-zinc-950">{item.product.name}</div>
-                        <div className="text-[10px] text-zinc-500">{item.product.woodSpecies}</div>
+                      <td className="p-3">
+                        <div className="font-roffelia text-base font-normal text-zinc-950">{item.product.name}</div>
+                        <div className="text-[11px] text-zinc-500">{item.product.woodSpecies}</div>
                       </td>
-                      <td className="p-2.5 text-center whitespace-nowrap font-semibold">
+                      <td className="p-3 text-center font-mono-luxury whitespace-nowrap">
                         {item.product.weightLbs} lbs
                       </td>
-                      <td className="p-2.5 text-center">{item.quantity}</td>
-                      <td className="p-2.5 text-right font-bold whitespace-nowrap">
-                        ${((item.product.priceCents * item.quantity) / 100).toFixed(2)}
+                      <td className="p-3 text-center font-mono-luxury">{item.quantity}</td>
+                      <td className="p-3 text-right font-mono-luxury font-medium whitespace-nowrap">
+                        ${((item.product.priceCents * item.quantity) / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}
                       </td>
                     </tr>
                   ))}
@@ -244,39 +238,39 @@ function OrderConfirmationContent() {
             </div>
 
             {/* Financial Ledger */}
-            <div className="border-t border-zinc-900 pt-4 flex flex-col items-end font-mono text-xs space-y-1">
-              <div className="flex justify-between w-64 text-zinc-600">
-                <span>FULFILLMENT FEE:</span>
-                <span className="text-zinc-950 font-bold">{isPickup ? "$0.00 (STUDIO PICKUP)" : "$18.00"}</span>
+            <div className="border-t border-zinc-200/60 pt-4 flex flex-col items-end font-sans-luxury text-xs space-y-1.5">
+              <div className="flex justify-between w-64 text-zinc-500">
+                <span>Fulfillment Fee:</span>
+                <span className="font-mono-luxury font-medium text-zinc-950">{isPickup ? "Complimentary" : "$18.00"}</span>
               </div>
-              <div className="flex justify-between w-64 text-zinc-600">
-                <span>FL SALES TAX (7.0%):</span>
-                <span className="text-zinc-950 font-bold">
-                  ${(Math.round(order.grandTotalCents * 0.07 / 1.07) / 100).toFixed(2)}
+              <div className="flex justify-between w-64 text-zinc-500">
+                <span>FL Sales Tax (7.0%):</span>
+                <span className="font-mono-luxury font-medium text-zinc-950">
+                  ${(Math.round(order.grandTotalCents * 0.07 / 1.07) / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}
                 </span>
               </div>
-              <div className="flex justify-between w-64 text-sm font-black text-zinc-950 border-t border-zinc-900 pt-1.5">
-                <span>TOTAL PAID:</span>
-                <span>${(order.grandTotalCents / 100).toFixed(2)} USD</span>
+              <div className="flex justify-between w-64 text-sm font-semibold text-zinc-950 border-t border-zinc-200 pt-2 font-mono-luxury">
+                <span>Total Settled:</span>
+                <span>${(order.grandTotalCents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })} USD</span>
               </div>
-              <div className="text-[10px] text-zinc-500 pt-1">
-                Settled via {order.paymentProvider.toUpperCase()} Commercial Gateway • Authorization Verified
+              <div className="text-[10px] font-mono-luxury text-zinc-400 pt-1">
+                Settled via {order.paymentProvider.toUpperCase()} Commercial Concierge Gateway
               </div>
             </div>
 
             {/* Back action */}
-            <div className="border-t border-zinc-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="border-t border-zinc-200/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
               <Link
                 href="/"
-                className="w-full sm:w-auto bg-black hover:bg-zinc-800 text-white font-mono text-xs uppercase font-bold py-3 px-6 text-center transition-colors"
+                className="w-full sm:w-auto rounded-full bg-zinc-950 hover:bg-zinc-800 text-white font-sans-luxury text-xs uppercase tracking-wider font-medium py-3.5 px-8 text-center transition-colors shadow-xs"
               >
-                &larr; RETURN TO CATALOG
+                &larr; Return to Collection
               </Link>
               <button
                 onClick={() => window.print()}
-                className="w-full sm:w-auto border border-zinc-900 hover:bg-zinc-100 text-zinc-900 font-mono text-xs uppercase font-bold py-3 px-6 text-center transition-colors"
+                className="w-full sm:w-auto rounded-full border border-zinc-300 hover:bg-zinc-100 text-zinc-800 font-sans-luxury text-xs uppercase tracking-wider font-medium py-3.5 px-8 text-center transition-colors"
               >
-                PRINT DISPATCH DOCKET
+                Print Acquisition Dossier
               </button>
             </div>
           </div>
@@ -289,9 +283,9 @@ function OrderConfirmationContent() {
 export default function OrderConfirmationPage() {
   return (
     <CartProvider>
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-[#fcfbf9]">
         <Header />
-        <Suspense fallback={<div className="p-12 text-center font-mono text-xs">LOADING ORDER DOCKET...</div>}>
+        <Suspense fallback={<div className="p-16 text-center font-mono-luxury text-xs text-zinc-400">LOADING DOSSIER...</div>}>
           <OrderConfirmationContent />
         </Suspense>
         <Footer />
@@ -299,4 +293,3 @@ export default function OrderConfirmationPage() {
     </CartProvider>
   );
 }
-
