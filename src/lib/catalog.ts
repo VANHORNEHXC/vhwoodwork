@@ -76,10 +76,10 @@ export function parseProduct(input: unknown, id: string): Product {
   const stockCount = Number(raw.stockCount);
   const category = str("category");
   const placement = str("placement");
-  const primaryImage = str("primaryImage", 2000);
+  const primaryImage = str("primaryImage", 2000) || "/wood-placeholder.svg";
   const secondaryImage = str("secondaryImage", 2000) || primaryImage;
 
-  if (!str("name") || !str("itemCode") || !str("lotNumber") || !str("woodSpecies")) throw new Error("Name, code, lot and wood species are required");
+  if (!str("name") || !str("itemCode") || !str("lotNumber") || !str("woodSpecies")) throw new Error("Invalid product: name and wood species are required");
   if (!["seating", "tables", "storage", "studio-objects"].includes(category)) throw new Error("Invalid category");
   if (!["interior", "exterior"].includes(placement)) throw new Error("Invalid placement");
   if (!Number.isSafeInteger(priceCents) || priceCents < 0) throw new Error("Invalid price");

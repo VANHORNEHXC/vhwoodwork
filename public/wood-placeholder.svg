@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Woodwork image coming soon">
+  <rect width="800" height="800" fill="#ebe5da"/>
+  <path d="M0 146c173-66 261-24 392-53 148-32 248-8 408-62M0 290c135-39 240-29 381-56 173-32 282-17 419-47M0 439c179-50 273-11 399-51 151-48 274-19 401-47M0 610c121-50 243-13 385-53 149-42 292-7 415-55M0 746c169-45 261-23 386-51 149-35 274-13 414-49" fill="none" stroke="#d5c7b2" stroke-width="3" opacity=".6"/>
+  <rect x="158" y="156" width="484" height="488" rx="240" fill="#f5f1e8" opacity=".72"/>
+  <path d="M252 458c100-66 205-64 296 0M269 499c92-50 172-49 262 0" fill="none" stroke="#ad9070" stroke-width="2" opacity=".55"/>
+  <text x="400" y="396" fill="#685846" font-family="Georgia,serif" font-size="74" letter-spacing="8" text-anchor="middle">VH</text>
+  <text x="400" y="556" fill="#897766" font-family="Arial,sans-serif" font-size="18" letter-spacing="6" text-anchor="middle">WOODWORK</text>
+</svg>

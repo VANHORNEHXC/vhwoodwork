@@ -22,11 +22,18 @@ export async function POST(request: NextRequest) {
   if (!isAdminRequest(request)) return unauthorized();
   if (!isSameOrigin(request)) return NextResponse.json({ error: "Invalid request origin" }, { status: 403 });
   try {
-    const product = parseProduct(await request.json(), randomUUID());
+    const body = await request.json();
+    const id = randomUUID();
+    const reference = id.slice(0, 8).toUpperCase();
+    const product = parseProduct({
+      ...body,
+      itemCode: body?.itemCode || `VHW-${reference}`,
+      lotNumber: body?.lotNumber || `LOT-${reference}`,
+    }, id);
     await insertProduct(product);
     return NextResponse.json({ product }, { status: 201 });
   } catch (error) {
-    if (error instanceof SyntaxError || (error instanceof Error && error.message.startsWith("Invalid"))) {
+    if (error instanceof SyntaxError || (error instanceof Error && (error.message.startsWith("Invalid") || error.message.includes("must use")))) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
     return failure(error);
